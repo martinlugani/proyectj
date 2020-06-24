@@ -23,13 +23,13 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 	}
 
 	@Override
-	public Usuario findOne(Long id) {
-		return em.find(Usuario.class, id);
+	public Usuario findOne(Long idusuario) {
+		return em.find(Usuario.class, idusuario);
 	}
 	
 	@Override
 	public void save(Usuario usuario) {
-		if(usuario.getId() != null && usuario.getId() >0) {
+		if(usuario.getIdusuario() != null && usuario.getIdusuario() >0) {
 			em.merge(usuario);
 		} else {
 			em.persist(usuario);
@@ -38,8 +38,8 @@ public class UsuarioDaoImpl implements IUsuarioDao {
 
 
 	@Override
-	public void delete(Long id) {
-		em.remove(findOne(id));
+	public void delete(Long idusuario) {
+		em.remove(findOne(idusuario));
 	}
 
 }

@@ -31,15 +31,15 @@ public class UsuarioServiceImpl implements IUsuarioService{
 
 	@Override
 	@Transactional(readOnly = true)
-	public Usuario findOne(Long id) {
+	public Usuario findOne(Long idusuario) {
 		// TODO Auto-generated method stub
-		return usuarioDao.findOne(id);
+		return usuarioDao.findOne(idusuario);
 	}
 
 	@Override
 	@Transactional
-	public void delete(Long id) {
-		usuarioDao.delete(id);
+	public void delete(Long idusuario) {
+		usuarioDao.delete(idusuario);
 		
 	}
 

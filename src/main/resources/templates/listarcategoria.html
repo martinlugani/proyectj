@@ -28,31 +28,27 @@
 		<h1
 			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
 			th:text="${titulo}"></h1>
-        <p><a th:href="@{/form}" class="btn btn-success btn-xs">Crear usuario</a></p>
+        <p><a th:href="@{/formcategoria}" class="btn btn-success btn-xs">Crear categoria</a></p>
 		<table class="table table-striped table-bordered">
 			<thead class="thead-inverse">
 				<tr>
 					<th>id</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Usuario</th>
-					<th>Email</th>
-					<th>Nro Documento</th>
+					<th>Descripcion</th>
+					<th>Porcentaje</th>
 					<th>Editar</th>
 					<th>Eliminar</th>
 				</tr>
 			</thead>
 			<tbody>
-				<tr th:each="usuario: ${usuarios}">
-					<td th:text="${usuario.idusuario}"></td>
-					<td th:text="${usuario.nombre}"></td>
-					<td th:text="${usuario.apellido}"></td>
-					<td th:text="${usuario.usuario}"></td>
-					<td th:text="${usuario.email}"></td>
-					<td th:text="${usuario.nrodocumento}"></td>
+				<tr th:each="categoria: ${categoria}">
+					<td th:text="${categoria.idcategoria}"></td>
+					<td th:text="${categoria.descripcion}"></td>
+					<td th:text="${categoria.porcentaje}"></td>
+
 				
-					<td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${usuario.idusuario}" th:text="'editar'"></a></td>
-					<td></td>
+					<td><a class="btn btn-primary btn-xs" th:href="@{/formcategoria/} + ${categoria.idcategoria}" th:text="'Editar'"></a></td>
+					<td><a class="btn btn-danger btn-xs" th:href="@{/eliminarcategoria/} + ${categoria.idcategoria}" th:text="'Eliminar'" onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
+
 				</tr>
 			</tbody>
 

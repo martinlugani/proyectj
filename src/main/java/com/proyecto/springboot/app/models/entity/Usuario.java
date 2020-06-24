@@ -22,10 +22,11 @@ import org.springframework.format.annotation.DateTimeFormat;
 public class Usuario implements Serializable {
 
 	private static final long serialVersionUID = 1L;
-
+	
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
-	private Long id;
+	@Column(unique=true)
+	private Long idusuario;
 
 	@NotEmpty
 	private String nombre;
@@ -33,6 +34,7 @@ public class Usuario implements Serializable {
 	@NotEmpty
 	private String apellido;
 	
+	@Column(unique=true)
 	@NotEmpty
 	private String usuario;
 	
@@ -40,24 +42,34 @@ public class Usuario implements Serializable {
 	@Email
 	private String email;
 
+	@NotEmpty
+	private Long nrodocumento;
 	
 	
 	@NotNull
-	@Column(name = "create_at")
+	/*@Column(name = "create_at")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date createAt;
+	private Date fechaAlta;
 	
-	public Long getId() {
-		return id;
+	public Date getFechaAlta() {
+		return fechaAlta;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
-	}
-
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
+	}*/
+	
 	public String getNombre() {
 		return nombre;
+	}
+
+	public Long getIdusuario() {
+		return idusuario;
+	}
+
+	public void setIdusuario(Long idusuario) {
+		this.idusuario = idusuario;
 	}
 
 	public void setNombre(String nombre) {
@@ -79,14 +91,7 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-
-	public Date getCreateAt() {
-		return createAt;
-	}
-
-	public void setCreateAt(Date createAt) {
-		this.createAt = createAt;
-	}
+	
 
 	public String getUsuario() {
 		return usuario;
@@ -94,6 +99,14 @@ public class Usuario implements Serializable {
 
 	public void setUsuario(String usuario) {
 		this.usuario = usuario;
+	}
+
+	public Long getNrodocumento() {
+		return nrodocumento;
+	}
+
+	public void setNrodocumento(Long nrodocumento) {
+		this.nrodocumento = nrodocumento;
 	}
 
 	
