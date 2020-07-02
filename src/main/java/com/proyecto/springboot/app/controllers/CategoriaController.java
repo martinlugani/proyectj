@@ -4,14 +4,17 @@ import java.util.Map;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
+import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
+
 
 import com.proyecto.springboot.app.models.entity.Categoria;
 import com.proyecto.springboot.app.models.service.ICategoriaService;
@@ -23,14 +26,26 @@ public class CategoriaController {
 	
 	@Autowired
 	private ICategoriaService categoriaService;
-
+	
+//	private IUsuarioService usuarioService;
+	
 	@RequestMapping(value = "/listarcategoria", method = RequestMethod.GET)
-	public String listar(Model model) {
+	public String listarcategoria(Model model) {
 		model.addAttribute("titulo", "Listado de categoria");
 		model.addAttribute("categoria", categoriaService.findAllCat());
 		return "listarcategoria";
 	}
-	@RequestMapping(value="/formcategoria/idcategoria}")
+
+	@RequestMapping(value = "/formcategoria")
+	public String crear(Map<String, Object> model) {
+
+		Categoria categoria = new Categoria();
+		model.put("categoria", categoria);
+		model.put("titulo", "Formulario de categoria");
+		return "formcategoria";
+	}
+	
+	@RequestMapping(value="/formcategoria/{idcategoria}")
 	public String editar(@PathVariable(value="idcategoria") Long idcategoria, Map<String, Object> model) {
 		
 		Categoria categoria = null;
@@ -67,6 +82,3 @@ public class CategoriaController {
 		return "redirect:/listarcategoria";
 	}
 }
-
-
-

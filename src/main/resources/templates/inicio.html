@@ -2,13 +2,16 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head>
 <meta charset="UTF-8" />
-<title th:text="${titulo}">Insert title here</title>
+<title th:text="${mensaje}">Insert title here</title>
+
 <link rel="stylesheet"
 	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/style.css}"></link>
 </head>
 <body>
 
-	<nav class="navbar navbar-expand-md navbar-dark bg-dark">
+<nav class="navbar navbar-expand-md navbar-dark bg-dark">
 		<a class="navbar-brand" href="#">Hedlan</a>
 		<button class="navbar-toggler" type="button" data-toggle="collapse"
 			aria-label="Toggle navigation">
@@ -16,19 +19,40 @@
 		</button>
 		<div class="collapse navbar-collapse">
 			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/">Menu</a></li>
+				<li class="nav-item active"><a class="nav-link" href="/">Inicio</a></li>
 				<li class="nav-item"><a class="nav-link" href="#about"
 					th:href="@{/listar}">Usuario</a></li>
 				<li class="nav-item"><a class="nav-link" href="#about"
 					th:href="@{/listarcategoria}">Categoria</a></li>
+				<li class="nav-item"><a class="nav-link" href="#about"
+					th:href="@{/listarcategoria}">Firma</a></li>
 			</ul>
 		</div>
 	</nav>
-
-			
-
-			
-			
-			
+	
+	<div class="container">
+		<div>
+			<h1 th:text="${mensaje}"></h1>
+			<h2>Seleccione opcion para operar</h2>
+		</div>
+	</div>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	<br>	</br>
+	
+	<div class="container">
+		<hr />
+		<footer>
+		
+		
+			<p>&copy; Company 2020</p>
+		</footer>
+	</div>
 </body>
 </html>

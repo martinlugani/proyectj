@@ -6,14 +6,14 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.proyecto.springboot.app.models.dao.ICategoriaDaoImpl;
+import com.proyecto.springboot.app.models.dao.ICategoriaDao;
 import com.proyecto.springboot.app.models.entity.Categoria;
 
 @Service
 public class CategoriaServiceImpl implements ICategoriaService{
 	
 	@Autowired
-	private ICategoriaDaoImpl categoriaDao;
+	private ICategoriaDao categoriaDao;
 	
 	@Override
 	@Transactional(readOnly = true)
@@ -21,23 +21,26 @@ public class CategoriaServiceImpl implements ICategoriaService{
 		// TODO Auto-generated method stub
 		return categoriaDao.findAllCat();
 	}
-
+	@Transactional
 	@Override
+
 	public void save(Categoria categoria) {
-		// TODO Auto-generated method stub
+		categoriaDao.save(categoria);
 		
 	}
 
 	@Override
+	@Transactional(readOnly = true)
 	public Categoria findOneCat(Long idcategoria) {
 		// TODO Auto-generated method stub
-		return null;
+		return categoriaDao.findOneCat(idcategoria);
 	}
-
+	
+	//prepersis
 	@Override
+	@Transactional
 	public void delete(Long idcategoria) {
 		// TODO Auto-generated method stub
-		
+		categoriaDao.delete(idcategoria);
 	}
-
 }

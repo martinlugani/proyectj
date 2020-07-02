@@ -1,6 +1,6 @@
 package com.proyecto.springboot.app.models.entity;
+
 import java.io.Serializable;
-import java.util.Date;
 
 import javax.persistence.Column;
 import javax.persistence.Entity;
@@ -11,14 +11,19 @@ import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
+import javax.validation.constraints.Null;
 
-import org.hibernate.validator.constraints.Email;
 import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "categoria")
 
 public class Categoria implements Serializable{
+	/**
+	 * 
+	 */
+	private static final long serialVersionUID = 7536804144972451999L;
+
 	@Id
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique=true)
@@ -28,10 +33,10 @@ public class Categoria implements Serializable{
 	private String descripcion;
 	
 	@NotEmpty
-	private Long porcentaje;
+	private String porcentaje;
 	
-	@NotEmpty
-	private Boolean tipo;
+	@Column(nullable = false)
+	private Boolean gratificacion;
 
 	public Long getIdcategoria() {
 		return idcategoria;
@@ -40,6 +45,7 @@ public class Categoria implements Serializable{
 	public void setIdcategoria(Long idcategoria) {
 		this.idcategoria = idcategoria;
 	}
+	
 
 	public String getDescripcion() {
 		return descripcion;
@@ -49,21 +55,20 @@ public class Categoria implements Serializable{
 		this.descripcion = descripcion;
 	}
 
-	public Long getPorcentaje() {
+	public String getPorcentaje() {
 		return porcentaje;
 	}
 
-	public void setPorcentaje(Long porcentaje) {
+	public void setPorcentaje(String porcentaje) {
 		this.porcentaje = porcentaje;
 	}
 
-	public Boolean getTipo() {
-		return tipo;
+	public Boolean getGratificacion() {
+		return gratificacion;
 	}
 
-	public void setTipo(Boolean tipo) {
-		this.tipo = tipo;
+	public void setGratificacion(Boolean gratificacion) {
+		this.gratificacion = gratificacion;
 	}
-	
 	
 }
