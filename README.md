@@ -43,4 +43,4 @@ Algunas  Funcionalidades:
 
 	Agregado masivo de recibos
 
-	Calculo de sueldo.
+	Calculo de monto a cobrar segun conceptos.
