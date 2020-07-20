@@ -1,35 +1,14 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title th:text="${titulo}">Insert title here</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-</head>
+<head th:replace="layout/layout :: head"></head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">Hedlan</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/">Inicio</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listar}">Usuario</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listarcategoria}">Categoria</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listarcategoria}">Firma</a></li>
-			</ul>
-		</div>
-	</nav>
+	<header th:replace="layout/layout :: header"></header>
+	
+	<div class="container py-4">
+		<div class="card bg-dark text-white">
 
-	<div class="container">
-		<h1 th:text="${titulo}"
-			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"></h1>
+			<div class="card-header" th:text="${titulo}"></div>
 			
 		<div th:object="${categoria}" th:remove="tag">
 			<ul th:if="${#fields.hasErrors('*')}" class="alert alert-danger"
@@ -40,14 +19,14 @@
 		
 		<form th:action="@{/formcategoria}" th:object="${categoria}" method="post">
 			<div class="form-group row">
-				<label for="descripcion" class="col-sm-2 col-form-label">Descripcion</label>
+				<label for="descripcion" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Descripcion</label>
 				<div class="col-sm-6">
 					<input type="text" th:field="*{descripcion}" class="form-control" th:errorclass="'form-control alert-danger'"/>
 					<small class="form-text text-danger" th:if="${#fields.hasErrors('descripcion')}" th:errors="*{descripcion}"></small>
 				</div>
 			</div>
 			<div class="form-group row">
-				<label for="porcentaje" class="col-sm-2 col-form-label">Porcentaje</label>
+				<label for="porcentaje" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Porcentaje</label>
 				<div class="col-sm-6">
 					<input type="text" th:field="*{porcentaje}" class="form-control" th:errorclass="'form-control alert-danger'" />
 					<small class="form-text text-danger" th:if="${#fields.hasErrors('porcentaje')}" th:errors="*{porcentaje}"></small>
@@ -57,12 +36,15 @@
 			
 			
 					
-			<div class="form-group row">
+			<div class="form-group text-left">
 				<div class="col-sm-6">
-					<input type="submit" value="Crear categoria" class="btn btn-primary" />
+					<input type="submit" value="Crear categoria" class="btn btn-secondary" />
+					</div>
 				</div>
-			</div>
-		</form>
+			</form>
+		</div>
+	
+		  <footer th:replace="layout/layout :: footer"></footer>
 	</div>
 </body>
 </html>

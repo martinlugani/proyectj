@@ -1,65 +1,56 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title th:text="${titulo}">Insert title here</title>
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-</head>
+<head th:replace="layout/layout :: head"></head>
+
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">Hedlan</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/">Inicio</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listar}">Usuario</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listarcategoria}">Categoria</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listarcategoria}">Firma</a></li>
-			</ul>
-		</div>
-	</nav>
-	
-	<div class="container">
-		<h1
-			class="text-secondary border border-success border-top-0 border-left-0 border-right-0"
-			th:text="${titulo}"></h1>
-        <p><a th:href="@{/form}" class="btn btn-success btn-xs">Crear usuario</a></p>
-		<table class="table table-striped table-bordered">
-			<thead class="thead-inverse">
-				<tr>
-					<th>id</th>
-					<th>Nombre</th>
-					<th>Apellido</th>
-					<th>Usuario</th>
-					<th>Email</th>
-					<th>Nro Documento</th>
-					<th>Editar</th>
-					<th>Inactivar</th>
-				</tr>
-			</thead>
-			<tbody>
-				<tr th:each="usuario: ${usuarios}">
-					<td th:text="${usuario.idusuario}"></td>
-					<td th:text="${usuario.nombre}"></td>
-					<td th:text="${usuario.apellido}"></td>
-					<td th:text="${usuario.usuario}"></td>
-					<td th:text="${usuario.email}"></td>
-					<td th:text="${usuario.nrodocumento}"></td>
-				
-					<td><a class="btn btn-primary btn-xs" th:href="@{/form/} + ${usuario.idusuario}" th:text="'editar'"></a></td>
-					<td></td>
-				</tr>
-			</tbody>
+	<header th:replace="layout/layout :: header"></header>
 
-		</table>
+	<div class="container py-4">
+		<div class="card bg-light">
+
+			<div class="card-header" th:text="${titulo}"></div>
+
+			<div class="card-body">
+
+				
+				<h4 class="card-title">
+					<a th:href="@{/form}" class="btn btn-primary btn-xs">Crear
+						usuario</a>
+				</h4>
+				<table class="table table-striped table-bordered">
+					<thead class="thead-inverse">
+						<tr>
+							<th>id</th>
+							<th>Nombre</th>
+							<th>Apellido</th>
+							<th>Usuario</th>
+							<th>Email</th>
+							<th>Nro Documento</th>
+							<th>Editar</th>
+							<th>Inactivar</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr th:each="usuario: ${usuarios}">
+							<td th:text="${usuario.idusuario}"></td>
+							<td th:text="${usuario.nombre}"></td>
+							<td th:text="${usuario.apellido}"></td>
+							<td th:text="${usuario.usuario}"></td>
+							<td th:text="${usuario.email}"></td>
+							<td th:text="${usuario.nrodocumento}"></td>
+
+							<td><a class="btn btn-primary btn-xs"
+								th:href="@{/form/} + ${usuario.idusuario}" th:text="'editar'"></a></td>
+							<td></td>
+						</tr>
+					</tbody>
+
+				</table>
+			</div>
+		</div>
 	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+
 </body>
 </html>

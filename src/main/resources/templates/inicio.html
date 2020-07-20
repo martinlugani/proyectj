@@ -1,34 +1,9 @@
 <!DOCTYPE html>
 <html xmlns:th="http://www.thymeleaf.org">
-<head>
-<meta charset="UTF-8" />
-<title th:text="${mensaje}">Insert title here</title>
-
-<link rel="stylesheet"
-	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
-
-<link rel="stylesheet" th:href="@{/css/style.css}"></link>
-</head>
+<head th:replace="layout/layout :: head"></head>
 <body>
 
-<nav class="navbar navbar-expand-md navbar-dark bg-dark">
-		<a class="navbar-brand" href="#">Hedlan</a>
-		<button class="navbar-toggler" type="button" data-toggle="collapse"
-			aria-label="Toggle navigation">
-			<span class="navbar-toggler-icon"></span>
-		</button>
-		<div class="collapse navbar-collapse">
-			<ul class="navbar-nav mr-auto">
-				<li class="nav-item active"><a class="nav-link" href="/">Inicio</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listar}">Usuario</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listarcategoria}">Categoria</a></li>
-				<li class="nav-item"><a class="nav-link" href="#about"
-					th:href="@{/listarcategoria}">Firma</a></li>
-			</ul>
-		</div>
-	</nav>
+	<header th:replace="layout/layout :: header"></header>
 	
 	<div class="container">
 		<div>
@@ -48,11 +23,8 @@
 	
 	<div class="container">
 		<hr />
-		<footer>
-		
-		
-			<p>&copy; Company 2020</p>
-		</footer>
+	<footer th:replace="layout/layout :: footer"></footer>
+
 	</div>
 </body>
 </html>
