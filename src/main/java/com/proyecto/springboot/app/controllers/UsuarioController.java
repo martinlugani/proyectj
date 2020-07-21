@@ -6,6 +6,9 @@ import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.PageRequest;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -13,10 +16,12 @@ import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.proyecto.springboot.app.util.paginator.PageRender;
 import com.proyecto.springboot.app.models.entity.Usuario;
 import com.proyecto.springboot.app.models.service.IUsuarioService;
 
@@ -37,9 +42,17 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listar(Model model) {
+	public String listar(@RequestParam(name="page", defaultValue="0") int page, Model model) {
+		
+		Pageable pageRequest = new PageRequest(page, 4);
+
+		Page<Usuario> usuarios = usuarioService.findAll(pageRequest);
+		
+		PageRender<Usuario> pageRender = new PageRender<Usuario>("/listar", usuarios);
+		
 		model.addAttribute("titulo", "Listado de usuarios");
 		model.addAttribute("usuarios", usuarioService.findAll());
+		model.addAttribute("page", pageRender);
 		return "listar";
 	}
 

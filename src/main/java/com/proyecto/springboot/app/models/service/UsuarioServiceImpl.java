@@ -3,6 +3,8 @@ package com.proyecto.springboot.app.models.service;
 import java.util.List;
 
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.data.domain.Page;
+import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -19,7 +21,7 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	@Transactional(readOnly = true)
 	public List<Usuario> findAll() {
 		// TODO Auto-generated method stub
-		return usuarioDao.findAll();
+		return (List<Usuario>)usuarioDao.findAll();
 	}
 
 	@Override
@@ -41,6 +43,11 @@ public class UsuarioServiceImpl implements IUsuarioService{
 	public void delete(Long idusuario) {
 		usuarioDao.delete(idusuario);
 		
+	}
+	@Override
+	public Page<Usuario> findAll(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return usuarioDao.findAll(pageable);
 	}
 
 }
