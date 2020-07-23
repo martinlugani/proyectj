@@ -8,50 +8,50 @@ import org.springframework.data.domain.Pageable;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
-import com.proyecto.springboot.app.models.dao.ICategoriaDao;
+import com.proyecto.springboot.app.models.dao.IArchivoDao;
 import com.proyecto.springboot.app.models.dao.IUsuarioDao;
-import com.proyecto.springboot.app.models.entity.Categoria;
+import com.proyecto.springboot.app.models.entity.Archivo;
 
 @Service
-public class CategoriaServiceImpl implements ICategoriaService{
-	
-	@Autowired
-	private ICategoriaDao categoriaDao;
-	
 
+public class ArchivoServiceImpl implements IArchivoService{
+	@Autowired
+	private IArchivoDao archivoDao;
+	
+	
+	@Override
 	@Transactional(readOnly = true)
-	public List<Categoria> findAllCat() {
+	public List<Archivo> findAllArch() {
 		// TODO Auto-generated method stub
-		return (List<Categoria>)categoriaDao.findAll();
+		return (List<Archivo>)archivoDao.findAll();
 	 //return (List<Usuario>)usuarioDao.findAll();
 	}
 	
 	
 	@Transactional
-	@Override
-	public void save(Categoria categoria) {
-		categoriaDao.save(categoria);
+	public void save(Archivo archivo) {
+		archivoDao.save(archivo);
 		
 	}
 
 	@Override
 	@Transactional(readOnly = true)
-	public Categoria findOneCat(Long idcategoria) {
+	public Archivo findOneArch(Long idarchivo) {
 		// TODO Auto-generated method stub
-		return categoriaDao.findOne(idcategoria);
+		return archivoDao.findOne(idarchivo);
 	}
 	
 	//prepersis
 	@Override
 	@Transactional
-	public void delete(Long idcategoria) {
+	public void delete(Long idarchivo) {
 		// TODO Auto-generated method stub
-		categoriaDao.delete(idcategoria);
+		archivoDao.delete(idarchivo);
 	}
 	
 	@Override
-	public Page<Categoria> findAllCat(Pageable pageable) {
+	public Page<Archivo> findAllArch(Pageable pageable) {
 		// TODO Auto-generated method stub
-		return categoriaDao.findAll(pageable);
+		return archivoDao.findAll(pageable);
 	}
 }
