@@ -1,0 +1,48 @@
+package com.edu.proyecto.models.services;
+
+import java.util.List;
+
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.stereotype.Service;
+import org.springframework.transaction.annotation.Transactional;
+
+import com.edu.proyecto.models.dao.ITipoDocumentoDao;
+import com.edu.proyecto.models.entity.TipoDocumento;
+
+@Service
+public class TipoDocumentoServiceImpl implements ITipoDocumentoService {
+	@Autowired
+	private ITipoDocumentoDao tipodocumentoDao;
+	
+	@Transactional(readOnly = true)
+	public List<TipoDocumento> findAllTipoDoc() {
+		// TODO Auto-generated method stub
+		return tipodocumentoDao.findAllTipoDoc();
+	}
+
+
+	@Override
+	@Transactional(readOnly = true)
+	public TipoDocumento findOneTipoDoc(Long idtipodocumento) {
+		// TODO Auto-generated method stub
+		return tipodocumentoDao.findOneTipoDoc(idtipodocumento);
+	}
+	
+	@Override
+	public void save(TipoDocumento tipodocumento) {
+		// TODO Auto-generated method stub
+		tipodocumentoDao.save(tipodocumento);		
+	}
+
+	@Override
+	public void delete(Long idtipodocumento) {
+		// TODO Auto-generated method stub
+		tipodocumentoDao.delete(idtipodocumento);
+
+		
+	}
+
+
+}
+
+

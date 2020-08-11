@@ -15,7 +15,7 @@
 
 				
 				<h4 class="card-title">
-					<a th:href="@{/listararchivos}" class="btn btn-primary btn-xs">Importar archivo</a>
+					<a th:href="@{/formarchivo}" class="btn btn-primary btn-xs">Importar archivo</a>
 				</h4>
 				<table class="table table-striped table-bordered">
 					<thead class="thead-inverse">
@@ -24,7 +24,8 @@
 							<th>Nombre</th>
 							<th>Ruta</th>
 							<th>Ver</th>
-							<th>Generar recibo</th>					
+							<th>Generar recibo</th>	
+							<th>Eliminar</th>					
 						</tr>
 					</thead>
 					<tbody>
@@ -33,11 +34,10 @@
 							<td th:text="${archivo.nombre}"></td>
 							<td th:text="${archivo.ruta}"></td>
 						
-							<td><a class="btn btn-primary btn-xs"
-								th:href="@{/form/} + ${archivo.idarchivo}" th:text="'VER'"></a></td>
-							<td><a class="btn btn-secondary btn-xs"
-								th:href="@{/generarrecibos/} + ${archivo.idarchivo}" th:text="'Generar archivo'"></a></td>
-							<td></td>
+							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${archivo.idarchivo}" th:text="'VER'"></a></td>							
+							
+							<td><a class="btn btn-secondary btn-xs" th:href="@{/generarrecibos/} + ${archivo.idarchivo}" th:text="'Generar archivo'"></a></td>
+							<td><a class="btn btn-danger btn-xs"th:href="@{/eliminararchivo/} + ${archivo.idarchivo}"	th:text="'Eliminar'"onclick="return confirm('Estás seguro que quieres eliminar el archivo?');"></a></td>
 						</tr>
 					</tbody>
 
