@@ -35,10 +35,17 @@ public class UsuarioController {
 	@Value("${application.controllers.mensaje}")
 	private String mensaje;
 	
+	private String molestia;
+	
 	@GetMapping("/")
 	public String inicio(Model model) {
 		model.addAttribute("mensaje", mensaje);
 		return "inicio";
+	}
+	@GetMapping("/generarecibos")
+	public String generarecibos(Model model) {
+		model.addAttribute("molestia", mensaje);
+		return "generarecibos";
 	}
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
@@ -55,7 +62,23 @@ public class UsuarioController {
 		model.addAttribute("page", pageRender);
 		return "listar";
 	}
+	
+	
+	@GetMapping(value = "/verusuario/{id}")
+	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
+		//Usuario usuario = new Usuario();
+		Usuario usuario = usuarioService.findOne(id);
+		if (usuario == null) {
+			flash.addFlashAttribute("error", "El usuario no existe en la base de datos");
+			return "listar";
+		
+		}
 
+		model.put("usuario", usuario);
+		model.put("titulo", "Detalle usuario: " + usuario.getNombre());
+		return "verusuario";
+	}
+	
 	@RequestMapping(value = "/form")
 	public String crear(Map<String, Object> model) {
 

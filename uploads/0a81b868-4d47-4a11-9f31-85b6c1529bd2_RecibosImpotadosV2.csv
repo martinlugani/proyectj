@@ -1,0 +1,4 @@
+id,NroRecibo,idusuario,PrimerConcepto,PrimerTipoConcepto,PrimerImporte,SegundoConcepto,SegundoTipoConcepto,SegundoImporte,TercerConcepto,TercerTipoConcepto,TercerImporte,ImporteTotal,CodigoUsuario
+3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5,1cdf83da-2d3c-4148-9cb7-b6e063c527d7,1cdf83da-2d3c-4148-9cb7-b6e063c527d7,Sueldo Basico,H,1500,Jubilacion,D,25,Obra social,D,25,1450,40
+3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5,1cdf83da-2d3c-4148-9cb7-b6e063c527d7,1cdf83da-2d3c-4148-9cb7-b6e063c527d7,Sueldo Basico,H,1500,Jubilacion,D,25,Obra social,D,25,1450,47
+3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5,1cdf83da-2d3c-4148-9cb7-b6e063c527d7,1cdf83da-2d3c-4148-9cb7-b6e063c527d7,Sueldo Basico,H,1500,Jubilacion,D,25,Obra social,D,25,1450,44

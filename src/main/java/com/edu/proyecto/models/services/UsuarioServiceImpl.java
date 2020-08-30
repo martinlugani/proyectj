@@ -37,6 +37,8 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		// TODO Auto-generated method stub
 		return usuarioDao.findById(idusuario).orElse(null);
 	}
+	
+	
 
 	@Override
 	@Transactional

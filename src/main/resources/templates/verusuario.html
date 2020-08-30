@@ -1,0 +1,33 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+		<div class="card bg-white">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+			
+				
+				<ul class="list-group">
+					<li class="list-group-item active" th:text="${usuario.nombre}"></li>
+					<li class="list-group-item" th:text="${usuario.apellido}"></li>
+					<li class="list-group-item" th:text="${usuario.email}"></li>
+					<li class="list-group-item" th:text="${usuario.nrodocumento}"></li>
+					
+					
+					
+				</ul>
+					
+				<br>
+				<td><a class="btn btn-success btn-xs" th:href="@{/formfirma/} + ${usuario.idusuario}" th:text="'Registrar firma'"></a></td>
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+				<td><a class="btn btn-info btn-xs" th:href="@{/formfirma/} + ${usuario.idusuario}" th:text="'Resetear firma'"></a></td>
+		
+		</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>
