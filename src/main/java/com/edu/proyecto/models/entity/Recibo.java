@@ -23,26 +23,26 @@ public class Recibo implements Serializable{
 	@Column(unique=true)
 	private Long id;
 	
-	@CsvBindByName(column = "idrecibo", required = true)
+	@CsvBindByName(column = "idrecibo")
 	private String idrecibo;
 	
 	
-	@CsvBindByName(column = "nrorecibo", required = true)
+	@CsvBindByName(column = "nrorecibo")
 	private String nrorecibo;
 	
-	@CsvBindByName(column = "idusuario", required = true)
+	@CsvBindByName(column = "idusuario")
 	private String idusuario;
 	
-	@CsvBindByName(column = "concepto", required = true)
+	@CsvBindByName(column = "concepto")
 	private String concepto;
 	
-	@CsvBindByName(column = "tipoconcepto", required = true)
+	@CsvBindByName(column = "tipoconcepto")
 	private String tipoconcepto;
 	
-	@CsvBindByName(column = "importe", required = true)
+	@CsvBindByName(column = "importe")
 	private int importe;
 	
-	@CsvBindByName(column = "importetotal", required = true)
+	@CsvBindByName(column = "importetotal")
 	private int importetotal;
 
 

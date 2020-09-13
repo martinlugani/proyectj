@@ -21,7 +21,9 @@ import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.edu.proyecto.models.entity.Firma;
 import com.edu.proyecto.models.entity.Usuario;
+import com.edu.proyecto.models.services.IFirmaService;
 import com.edu.proyecto.models.services.IUsuarioService;
 import com.edu.proyecto.util.paginator.PageRender;
 
@@ -31,6 +33,9 @@ public class UsuarioController {
 
 	@Autowired
 	private IUsuarioService usuarioService;
+	
+	@Autowired
+	private IFirmaService firmaService;
 	
 	@Value("${application.controllers.mensaje}")
 	private String mensaje;
@@ -63,17 +68,19 @@ public class UsuarioController {
 		return "listar";
 	}
 	
+	public static Long idusuario;
 	
 	@GetMapping(value = "/verusuario/{id}")
 	public String ver(@PathVariable(value = "id") Long id, Map<String, Object> model, RedirectAttributes flash) {
 		//Usuario usuario = new Usuario();
+		
 		Usuario usuario = usuarioService.findOne(id);
+		idusuario=id;
+		System.out.print(idusuario);
 		if (usuario == null) {
 			flash.addFlashAttribute("error", "El usuario no existe en la base de datos");
 			return "listar";
-		
 		}
-
 		model.put("usuario", usuario);
 		model.put("titulo", "Detalle usuario: " + usuario.getNombre());
 		return "verusuario";
@@ -133,4 +140,66 @@ public class UsuarioController {
 		flash.addFlashAttribute("success","Usuario eliminado con exito!");
 		return "redirect:/listar";
 	}
+	
+	/*--------------------------------------------------------------------*/
+	/*--------------------------------------------------------------------*/
+
+
+//Hacer que el formulario funcione comun, setear la firma en VER{ID} y pasarlo en el formulario en un firma.setidusuario;
+	
+	
+	@RequestMapping(value = "/formfirma")
+	public String crearfirma(Map<String, Object> model) {
+		System.out.print(idusuario);
+		Firma firma = new Firma();
+		firma.setIdusuario(idusuario);
+
+		model.put("firma", firma);
+		model.put("titulo", "Formulario de firma");
+		return "formfirma";
+		
+	}
+	/* System.out.println("idrecibo : " + recibo.getIdrecibo());
+	 * System.out.println("concepto : " + recibo.getConcepto()); */
+	
+	@RequestMapping(value = "/formfirma", method = RequestMethod.POST)
+	public String guardar(@Valid Firma firma, BindingResult result, Model model,RedirectAttributes flash, SessionStatus status) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Formulario de firma");
+			firma.setIdusuario(idusuario); //aca se guarda realmente
+			System.out.print(idusuario);
+
+			return "listar";
+		}
+		firma.setIdusuario(idusuario);
+		System.out.print(idusuario);
+		
+		String mensajeFlash = (firma.getIdfirma() != null)? "firma editado con éxito!" : "Firma creado con éxito!";
+		firmaService.save(firma);
+		status.setComplete();
+		flash.addFlashAttribute("success", mensajeFlash);
+		return "redirect:listar";
+	}
+	
+	
 }
+
+/*@RequestMapping(value="/formfirma/{idusuario}")
+public String editar(@PathVariable(value="idusuario") Long idusuario,RedirectAttributes flash, Map<String, Object> model) {
+	Usuario usuario = null;
+	
+	if(idusuario > 0) {
+		usuario = usuarioService.findOne(idusuario);
+		if(usuario == null) {
+			flash.addFlashAttribute("error","El id de usuario no puede ser cero!");
+			return "redirect:/listar";
+		}
+	} else {
+		flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
+		return "redirect:/listar";
+	}
+	model.put("firma", firma);
+	model.put("titulo", "Editar firma");
+	return "formfirma";
+}*/

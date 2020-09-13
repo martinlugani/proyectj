@@ -23,7 +23,9 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.proyecto.models.entity.Categoria;
 import com.edu.proyecto.models.entity.Firma;
+import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IFirmaService;
+import com.edu.proyecto.models.services.IUsuarioService;
 import com.edu.proyecto.util.paginator.PageRender;
 
 @Controller
@@ -32,6 +34,9 @@ public class FirmaController {
 	
 	@Autowired
 	private IFirmaService firmaService;
+	
+	@Autowired
+	private IUsuarioService usuarioService;
 	
 	@RequestMapping(value = "/listarfirma", method = RequestMethod.GET)
 	public String listarfirma(@RequestParam(name="page", defaultValue="0") int page,Model model) {
@@ -48,48 +53,6 @@ public class FirmaController {
 		
 	}
 
-	@RequestMapping(value = "/formfirma")
-	public String crear(Map<String, Object> model) {
-
-		Firma firma = new Firma();
-		model.put("firma", firma);
-		model.put("titulo", "Formulario de firma");
-		return "formfirma";
-	}
-	
-	
-	@RequestMapping(value="/formfirma/{idfirma}")
-	public String editar(@PathVariable(value="idfirma") Long idfirma,RedirectAttributes flash, Map<String, Object> model) {
-		
-		Firma firma = null;
-		
-		if(idfirma > 0) {
-			firma = firmaService.findOneFirma(idfirma);
-		if(firma == null) {
-				flash.addFlashAttribute("error","El id de firma no existe en BBDD!");
-				return "redirect:/listar";
-				}
-		} else {
-			return "redirect:/listar";
-		}
-		model.put("firma", firma);
-		model.put("titulo", "Editar firma");
-		return "verusuario";
-	}
-
-	@RequestMapping(value = "/formfirma", method = RequestMethod.POST)
-	public String guardar(@Valid Firma firma, BindingResult result, Model model,RedirectAttributes flash, SessionStatus status) {
-
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de firma");
-			return "listar";
-		}
-		String mensajeFlash = (firma.getIdfirma() != null)? "firma editado con éxito!" : "Categoria creado con éxito!";
-		firmaService.save(firma);
-		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:listar";
-	}
 	
 	@RequestMapping(value="/eliminarfirma/{idfirma}")
 	public String eliminar(@PathVariable(value="idfirma") Long idfirma,RedirectAttributes flash) {

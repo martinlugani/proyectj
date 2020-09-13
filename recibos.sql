@@ -1,11 +1,11 @@
 -- phpMyAdmin SQL Dump
--- version 4.8.4
+-- version 4.9.0.1
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 30-08-2020 a las 19:46:38
--- Versión del servidor: 10.1.37-MariaDB
--- Versión de PHP: 7.1.26
+-- Tiempo de generación: 13-09-2020 a las 07:38:31
+-- Versión del servidor: 10.3.16-MariaDB
+-- Versión de PHP: 7.1.30
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -25,89 +25,42 @@ SET time_zone = "+00:00";
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `concepto`
+-- Estructura de tabla para la tabla `archivo`
 --
 
-CREATE TABLE `concepto` (
-  `idConcepto` int(11) NOT NULL,
-  `fechaAlta` date DEFAULT NULL,
-  `primerconcepto` varchar(50) DEFAULT NULL,
-  `primerTipoConcepto` varchar(1) DEFAULT NULL,
-  `primerImporte` int(11) DEFAULT NULL,
-  `idRecibo` int(11) DEFAULT NULL,
-  `idusuario` int(11) DEFAULT NULL,
-  `NroLoteProcesado` int(11) DEFAULT NULL,
-  `segundoConcepto` varchar(50) DEFAULT NULL,
-  `segundoTipoConcepto` varchar(1) DEFAULT NULL,
-  `segundoImporte` int(11) DEFAULT NULL,
-  `tercerConcepto` varchar(50) DEFAULT NULL,
-  `tercerTipoConcepto` varchar(1) DEFAULT NULL,
-  `tercerImporte` int(11) DEFAULT NULL,
-  `cuartoConcepto` varchar(50) DEFAULT NULL,
-  `cuartoTipoConcepto` varchar(1) DEFAULT NULL,
-  `cuartoImporte` int(11) DEFAULT NULL,
-  `importeTotal` int(11) DEFAULT NULL
+CREATE TABLE `archivo` (
+  `idarchivo` bigint(20) NOT NULL,
+  `nombre` varchar(255) NOT NULL,
+  `ruta` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `concepto`
+-- Volcado de datos para la tabla `archivo`
 --
 
-INSERT INTO `concepto` (`idConcepto`, `fechaAlta`, `primerconcepto`, `primerTipoConcepto`, `primerImporte`, `idRecibo`, `idusuario`, `NroLoteProcesado`, `segundoConcepto`, `segundoTipoConcepto`, `segundoImporte`, `tercerConcepto`, `tercerTipoConcepto`, `tercerImporte`, `cuartoConcepto`, `cuartoTipoConcepto`, `cuartoImporte`, `importeTotal`) VALUES
-(1, '2019-10-27', 'D', 'H', 1500, NULL, 1, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(2, '2019-10-27', NULL, 'D', 25, NULL, 1, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(3, '2019-10-27', NULL, 'D', 25, NULL, 1, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(4, '2019-10-27', 'H', 'H', 1500, NULL, 41, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(5, '2019-10-27', 'D', 'D', 25, NULL, 1, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(6, '2019-10-27', 'D', 'D', 25, NULL, 1, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(7, '2019-10-27', 'H', 'H', 1500, NULL, 41, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(8, '2019-10-27', 'D', 'D', 25, NULL, 41, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(9, '2019-10-27', 'D', 'D', 25, NULL, 1, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(10, '2019-10-27', 'Sueldo Basico', 'H', 1500, NULL, 40, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(11, '2019-10-27', 'Jubilacion', 'D', 25, NULL, 40, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(12, '2019-10-27', 'Obra social', 'D', 25, NULL, 40, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(13, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(14, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(15, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, NULL, '', '', 0, '', '', 0, '', '', 0, 0),
-(16, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(17, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(18, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(19, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(20, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(21, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 1, '', '', 0, '', '', 0, '', '', 0, 0),
-(22, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(23, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(24, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(25, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(26, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(27, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(28, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(29, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(30, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 2, '', '', 0, '', '', 0, '', '', 0, 0),
-(31, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(32, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(33, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(34, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(35, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(36, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(37, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(38, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(39, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(40, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(41, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(42, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(43, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(44, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(45, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(46, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(47, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(48, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 3, '', '', 0, '', '', 0, '', '', 0, 0),
-(49, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 5, '', '', 0, '', '', 0, '', '', 0, 0),
-(50, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 5, '', '', 0, '', '', 0, '', '', 0, 0),
-(51, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 5, '', '', 0, '', '', 0, '', '', 0, 0),
-(52, '2019-11-02', 'Sueldo Basico', 'H', 1500, NULL, NULL, 7, '', '', 0, '', '', 0, '', '', 0, 0),
-(53, '2019-11-02', 'Jubilacion', 'D', 25, NULL, NULL, 7, '', '', 0, '', '', 0, '', '', 0, 0),
-(54, '2019-11-02', 'Obra social', 'D', 25, NULL, NULL, 7, '', '', 0, '', '', 0, '', '', 0, 0);
+INSERT INTO `archivo` (`idarchivo`, `nombre`, `ruta`) VALUES
+(1, '4fe5dfce-5897-4db5-bcc0-432c0d6ffab3_RecibosImpotados.csv', 'abril');
+
+-- --------------------------------------------------------
+
+--
+-- Estructura de tabla para la tabla `categoria`
+--
+
+CREATE TABLE `categoria` (
+  `idcategoria` int(2) NOT NULL,
+  `descripcion` varchar(150) NOT NULL,
+  `porcentaje` int(11) NOT NULL,
+  `tipo` tinyint(1) NOT NULL,
+  `gratificacion` bit(1) NOT NULL
+) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `categoria`
+--
+
+INSERT INTO `categoria` (`idcategoria`, `descripcion`, `porcentaje`, `tipo`, `gratificacion`) VALUES
+(1, 'Jubilacion', 10, 1, b'0');
 
 -- --------------------------------------------------------
 
@@ -116,33 +69,91 @@ INSERT INTO `concepto` (`idConcepto`, `fechaAlta`, `primerconcepto`, `primerTipo
 --
 
 CREATE TABLE `firma` (
-  `idfirma` int(11) NOT NULL,
-  `CodigoFirma` int(11) NOT NULL,
-  `IdUsuario` int(11) DEFAULT NULL,
-  `FechaAlta` int(11) NOT NULL,
-  `FechaBaja` int(11) DEFAULT NULL
+  `idfirma` bigint(20) NOT NULL,
+  `idusuario` int(11) DEFAULT NULL,
+  `firma` varchar(255) DEFAULT NULL,
+  `refirma` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `firma`
+--
+
+INSERT INTO `firma` (`idfirma`, `idusuario`, `firma`, `refirma`) VALUES
+(1, NULL, '12345', '12345'),
+(2, NULL, '2345', '2345'),
+(3, NULL, '2378', '2378'),
+(4, NULL, '6789', '6789'),
+(5, NULL, '123', '123'),
+(6, 2, '321', '321');
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `rol`
+-- Estructura de tabla para la tabla `recibos`
 --
 
-CREATE TABLE `rol` (
-  `idrol` int(11) NOT NULL,
-  `Descripcion` varchar(75) DEFAULT NULL,
-  `FechaAlta` date DEFAULT NULL,
-  `FechaBaja` date DEFAULT NULL
+CREATE TABLE `recibos` (
+  `id` bigint(20) NOT NULL,
+  `concepto` varchar(255) DEFAULT NULL,
+  `idrecibo` varchar(255) DEFAULT NULL,
+  `idusuario` varchar(255) DEFAULT NULL,
+  `importe` int(11) NOT NULL,
+  `importetotal` int(11) NOT NULL,
+  `nrorecibo` varchar(255) DEFAULT NULL,
+  `tipoconcepto` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `rol`
+-- Volcado de datos para la tabla `recibos`
 --
 
-INSERT INTO `rol` (`idrol`, `Descripcion`, `FechaAlta`, `FechaBaja`) VALUES
-(21, 'Administrador', '2019-09-08', NULL),
-(22, 'usuario consulta', '2019-09-08', NULL);
+INSERT INTO `recibos` (`id`, `concepto`, `idrecibo`, `idusuario`, `importe`, `importetotal`, `nrorecibo`, `tipoconcepto`) VALUES
+(1, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(2, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(3, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(4, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(5, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(6, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(7, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(8, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(9, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(10, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(11, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(12, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(13, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(14, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(15, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(16, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(17, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(18, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(19, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(20, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(21, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(22, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(23, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(24, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(25, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(26, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(27, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(28, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(29, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(30, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(31, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(32, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(33, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(34, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(35, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(36, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(37, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(38, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(39, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(40, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(41, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(42, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
+(43, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
+(44, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
+(45, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D');
 
 -- --------------------------------------------------------
 
@@ -151,19 +162,10 @@ INSERT INTO `rol` (`idrol`, `Descripcion`, `FechaAlta`, `FechaBaja`) VALUES
 --
 
 CREATE TABLE `tipodocumento` (
-  `idtipodocumento` int(11) NOT NULL,
-  `descripcion` varchar(50) DEFAULT NULL,
-  `abreviacion` varchar(10) DEFAULT NULL,
-  `fechaAlta` date DEFAULT NULL,
-  `fechaBaja` date DEFAULT NULL
+  `idtipodocumento` bigint(20) NOT NULL,
+  `abreviacion` varchar(255) NOT NULL,
+  `descripcion` varchar(255) NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
-
---
--- Volcado de datos para la tabla `tipodocumento`
---
-
-INSERT INTO `tipodocumento` (`idtipodocumento`, `descripcion`, `abreviacion`, `fechaAlta`, `fechaBaja`) VALUES
-(30, 'Documento Nacional de Identidad', 'DNI', '2019-09-09', NULL);
 
 -- --------------------------------------------------------
 
@@ -173,43 +175,103 @@ INSERT INTO `tipodocumento` (`idtipodocumento`, `descripcion`, `abreviacion`, `f
 
 CREATE TABLE `usuario` (
   `idusuario` int(11) NOT NULL,
-  `nombre` varchar(60) DEFAULT NULL,
-  `apellido` varchar(60) DEFAULT NULL,
-  `idTipoDocumento` int(11) DEFAULT NULL,
-  `numeroDocumento` varchar(15) DEFAULT NULL,
-  `usuario` varchar(30) DEFAULT NULL,
-  `contrasena` varchar(20) DEFAULT NULL,
-  `email` varchar(25) DEFAULT NULL,
-  `FechaAlta` date DEFAULT NULL,
-  `idFirma` int(11) DEFAULT NULL,
-  `FechaBaja` date DEFAULT NULL,
-  `idRol` varchar(45) DEFAULT NULL,
-  `cargo` varchar(50) DEFAULT NULL
+  `nombre` varchar(150) NOT NULL,
+  `apellido` varchar(150) NOT NULL,
+  `usuario` varchar(50) NOT NULL,
+  `tipodocumento` int(2) NOT NULL,
+  `nrodocumento` int(11) NOT NULL,
+  `email` varchar(50) NOT NULL,
+  `fechaAlta` date NOT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `idTipoDocumento`, `numeroDocumento`, `usuario`, `contrasena`, `email`, `FechaAlta`, `idFirma`, `FechaBaja`, `idRol`, `cargo`) VALUES
-(1, 'sda', 'sad', 30, '213213', 'jo', 'a', 'a', '2019-09-02', 1, '2019-10-07', '21', NULL),
-(40, 'Usuario', 'Prueba', 30, '21023612', 'prueba', 'abc123', 'prueba@gmail.com', '2019-09-09', NULL, NULL, '21', NULL),
-(41, 'dsfds', 'sfsdf', 30, '45435', 'mar', 'w', 'ww', '2019-09-02', NULL, NULL, '21', NULL),
-(42, 'dsafsa', 'dsfsDSAD', 30, '123', 'WQEW', '12', '21', '2019-09-23', NULL, NULL, 'DASD', NULL),
-(43, 'ASDSAD', 'ASDA', 30, '111', 'SAD', 'SAS', '21', '2019-09-23', NULL, NULL, 'SADSA', NULL),
-(44, 'Daniel', 'Lopez', 30, '123293248', 'danielop', 'lop', '21', '2019-10-05', NULL, NULL, 'prueba@gmail.com', NULL),
-(45, 'Dario', 'Nuverio', 30, '23345347', 'dash', 'hup', '21', '2019-10-05', NULL, NULL, 'asdsa@gmail.com', NULL),
-(46, 'Javier', 'Uport', 30, '23432987', 'uportasda', 'asdasd', '21', '2019-10-05', NULL, NULL, 'prueba@akjdaks.com', NULL),
-(47, 'Ignacio', 'Omio', 30, '24234090', 'lip', 'lip', '21', '2019-10-05', NULL, NULL, 'jahsdj@jshadas,m', NULL),
-(48, 'Omar', 'Chavez', 30, '2398309', 'om', 'om', '21', '2019-10-05', NULL, NULL, 'prueba@aslmdsa', NULL),
-(49, 'HHJAS', 'SDFS', 30, '342423', 'SKLJDKAL', 'KLASJDLKA', '21', '2019-10-05', NULL, NULL, 'JHSADKHAJKS@JKASHDJA', NULL),
-(50, 'HHGJ', 'JHGJ', 30, '765764', 'JKHGHJ', 'JKGH', '21', '2019-10-05', NULL, '2019-10-07', 'JKHJKFG', NULL),
-(51, 'iHGAJSD', 'JHGADJAS', 30, '67579382', 'KLAJDLASLSAJDKL', 'JHSAKDAHS', '21', '2019-10-05', NULL, NULL, 'LASJDAKLDJAS', NULL),
-(52, 'aloskp', 'lakdlañ', 30, '879769', 'ma,nsda', 'jahsjdkahs', '21', '2019-10-05', NULL, '2019-10-07', 'nmabsndma', NULL),
-(53, 'hgfrths', 'hqgwdqwwq', 30, '545', '45fghf', 'dfgfdg', '21', '2019-10-05', NULL, NULL, 'fghfhb', NULL),
-(54, 'Prueba', 'usuario', 30, '1231132', 'admin', '123456', '21', '2019-10-07', NULL, NULL, 'prueba@gmail.com', NULL),
-(55, 'jhgthj', 'bnmbnm', 30, '65675765', 'ghjgh', 'hghjgh', '21', '2019-10-07', NULL, NULL, 'jhbjnbmm@hghj', NULL),
-(56, 'Claudio', 'Tab', 30, '29189128', 'clautab', 'popcha', 'jhsanb@gmail.com', '2019-10-07', NULL, NULL, '21', NULL);
+INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `usuario`, `tipodocumento`, `nrodocumento`, `email`, `fechaAlta`) VALUES
+(1, 'Daniel', 'Granizado', 'dgranizado', 1, 20458745, 'dgranizado@gmail.com', '2020-06-01'),
+(2, 'Elizabeth', 'Grant', 'egrant', 1, 21452146, 'egrant@gmail.com', '2020-06-10'),
+(3, 'Juan', 'Perz', 'jperez', 1, 23145256, 'jperez@gmail.com', '2020-06-09');
+
+--
+-- Índices para tablas volcadas
+--
+
+--
+-- Indices de la tabla `archivo`
+--
+ALTER TABLE `archivo`
+  ADD PRIMARY KEY (`idarchivo`);
+
+--
+-- Indices de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  ADD PRIMARY KEY (`idcategoria`);
+
+--
+-- Indices de la tabla `firma`
+--
+ALTER TABLE `firma`
+  ADD PRIMARY KEY (`idfirma`);
+
+--
+-- Indices de la tabla `recibos`
+--
+ALTER TABLE `recibos`
+  ADD PRIMARY KEY (`id`);
+
+--
+-- Indices de la tabla `tipodocumento`
+--
+ALTER TABLE `tipodocumento`
+  ADD PRIMARY KEY (`idtipodocumento`);
+
+--
+-- Indices de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  ADD PRIMARY KEY (`idusuario`);
+
+--
+-- AUTO_INCREMENT de las tablas volcadas
+--
+
+--
+-- AUTO_INCREMENT de la tabla `archivo`
+--
+ALTER TABLE `archivo`
+  MODIFY `idarchivo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `categoria`
+--
+ALTER TABLE `categoria`
+  MODIFY `idcategoria` int(2) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+
+--
+-- AUTO_INCREMENT de la tabla `firma`
+--
+ALTER TABLE `firma`
+  MODIFY `idfirma` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
+
+--
+-- AUTO_INCREMENT de la tabla `recibos`
+--
+ALTER TABLE `recibos`
+  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+
+--
+-- AUTO_INCREMENT de la tabla `tipodocumento`
+--
+ALTER TABLE `tipodocumento`
+  MODIFY `idtipodocumento` bigint(20) NOT NULL AUTO_INCREMENT;
+
+--
+-- AUTO_INCREMENT de la tabla `usuario`
+--
+ALTER TABLE `usuario`
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 COMMIT;
 
 /*!40101 SET CHARACTER_SET_CLIENT=@OLD_CHARACTER_SET_CLIENT */;

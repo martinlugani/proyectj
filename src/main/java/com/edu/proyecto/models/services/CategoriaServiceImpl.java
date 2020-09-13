@@ -25,12 +25,10 @@ public class CategoriaServiceImpl implements ICategoriaService{
 	 //return (List<Usuario>)usuarioDao.findAll();
 	}
 	
-	
 	@Transactional
 	@Override
 	public void save(Categoria categoria) {
-		categoriaDao.save(categoria);
-		
+		categoriaDao.save(categoria);	
 	}
 
 	@Override

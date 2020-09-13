@@ -3,12 +3,14 @@ package com.edu.proyecto.controller;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.SessionAttributes;
 
+import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
 import java.io.Reader;
 import java.nio.file.Files;
 import java.nio.file.Paths;
+import java.util.ArrayList;
 import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
@@ -29,8 +31,13 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.edu.proyecto.models.entity.Archivo;
 import com.edu.proyecto.models.entity.Categoria;
 import com.edu.proyecto.models.entity.Recibo;
+import com.edu.proyecto.models.entity.Usuario;
+import com.edu.proyecto.models.services.IArchivoService;
+import com.edu.proyecto.models.services.IReciboService;
+import com.edu.proyecto.util.paginator.PageRender;
 import com.opencsv.CSVReaderHeaderAware;
 import com.opencsv.bean.CsvToBean;
 import com.opencsv.bean.CsvToBeanBuilder;
@@ -38,48 +45,62 @@ import com.opencsv.exceptions.CsvValidationException;
 
 @Controller
 
-public class ReciboController{
+public class ReciboController {
 
-	private static final String SAMPLE_CSV_FILE_PATH = "C:\\Users\\Casa\\Desktop\\Workspace\\proyecto\\uploads\\RecibosImpotados.csv";
-	//@Autowired
-	//private ICategoriaService categoriaService;
-	
+	public static String archno;
 
-	private Recibo recibo;
-	
-	
-	
-	@GetMapping("/feedCustomerData")
-	public void setDataInDB() throws IOException {
-		   try (
-		            Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
-		        ) {
-		            CsvToBean<Recibo> csvToBean = new CsvToBeanBuilder(reader)
-		                    .withType(Recibo.class)
-		                    .withIgnoreLeadingWhiteSpace(true)
-		                    .build();
+	//private static final String SAMPLE_CSV_FILE_PATH = "uploads\\"+archno;
 
-		            Iterator<Recibo> reciboIterator = csvToBean.iterator();
-
-		            while (reciboIterator.hasNext()) {
-		            	Recibo recibo = reciboIterator.next();
-		            	//Recibo recibo = new Recibo();
-		                System.out.println("idrecibo : " + recibo.getIdrecibo());
-		                System.out.println("concepto : " + recibo.getConcepto());
-		                System.out.println("tipo : " + recibo.getTipoconcepto());
-		                System.out.println("importe : " + recibo.getImporte());
-		                System.out.println("importe total : " + recibo.getImportetotal());
-
-		                System.out.println("==========================");
-		            }
-		        }
-		    }
+	@Autowired
+	private IReciboService recservice;
 	
+	@Autowired
+	private IArchivoService archivoservice;
+
+	@GetMapping(value = "/insertaregistros/{nombre}")
+	public String insertar(@PathVariable(value = "nombre") String nombre, Map<String, Object> model, RedirectAttributes flash) throws IOException {
+		System.out.print(nombre);
+		//Archivo archivo = archivoservice.findOneArch(id);
+		archno=nombre;
+		System.out.print(archno);
+		String  SAMPLE_CSV_FILE_PATH = "uploads\\"+ archno;
+		File file = new File(SAMPLE_CSV_FILE_PATH);
+		String path = file.getAbsolutePath();
+		try (Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));
+		) {
+			CsvToBean<Recibo> csvToBean = new CsvToBeanBuilder(reader).withType(Recibo.class)
+					.withIgnoreLeadingWhiteSpace(true).build();
+			List<Recibo> lista = new ArrayList<Recibo>();
+			Iterator<Recibo> reciboIterator = csvToBean.iterator();
+
+			while (reciboIterator.hasNext()) {
+				Recibo recibo = reciboIterator.next();
+				/* System.out.println("idrecibo : " + recibo.getIdrecibo());
+				 * System.out.println("concepto : " + recibo.getConcepto()); */
+				lista.add(recibo);
+				System.out.println("==========================");
+			}
+			for (Recibo recibo : lista) {
+				System.out.println(recibo);
+			}
+			recservice.saveAll(lista);
+			return "redirect:/listararchivos";
+			}
 		
-	/*@SuppressWarnings("unchecked")
-	List<Recibo> beans = new CsvToBeanBuilder(new FileReader("C:\\Users\\jvillca\\Desktop\\Jimena\\Workspace\\proyecto\\uploads\\RecibosImpotados.csv"))
-	    	       .withType(Recibo.class).build().parse();*/
-	//Map<String, String> values = new CSVReaderHeaderAware(new FileReader("C:\\Users\\jvillca\\Desktop\\Jimena\\Workspace\\proyecto\\uploads\\RecibosImpotados.csv")).readMap();
 	}
+	@RequestMapping(value = "/listarecibos", method = RequestMethod.GET)
+	public String listarecibos(@RequestParam(name="page", defaultValue="0") int page,Model model) {
+		Pageable pageRequest = PageRequest.of(page, 4);
+
+		Page<Recibo> recibo = recservice.findAllRec(pageRequest);
 		
+		PageRender<Recibo> pageRender = new PageRender<Recibo>("/listarecibos", recibo);
+				
+		model.addAttribute("titulo", "Listado de recibo");
+		model.addAttribute("recibo", recservice.findAllRec());
+		model.addAttribute("page", pageRender);
+		return "listarecibos";
+		
+	}	
+}
 

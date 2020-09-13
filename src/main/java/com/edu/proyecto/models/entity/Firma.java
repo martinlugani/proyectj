@@ -29,13 +29,10 @@ public class Firma implements Serializable {
 	@Column(unique=true)
 	private Long idfirma;
 	
-	@NotEmpty
 	private Long idusuario;
 	
-	@NotEmpty
 	private String firma;
 
-	@NotEmpty
 	private String refirma;
 	
 	public Long getIdfirma() {

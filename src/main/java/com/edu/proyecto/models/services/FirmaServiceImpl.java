@@ -19,7 +19,6 @@ public class FirmaServiceImpl implements IFirmaService{
 	private IFirmaDao firmaDao;
 //	private IUsuarioDao usuarioDao;
 	
-	@Override
 	@Transactional(readOnly = true)
 	public List<Firma> findAllFirma() {
 		// TODO Auto-generated method stub
@@ -29,6 +28,7 @@ public class FirmaServiceImpl implements IFirmaService{
 
 	@Transactional
 	public void save(Firma firma) {
+		
 		firmaDao.save(firma);
 
 	}
@@ -59,4 +59,6 @@ public class FirmaServiceImpl implements IFirmaService{
 		// TODO Auto-generated method stub
 		return firmaDao.findAll(pageable);
 	}
+
+	
 }

@@ -21,7 +21,7 @@
 					<thead class="thead-inverse">
 						<tr>
 							<th>id</th>
-							<th>Nombre</th>
+							<th>Archivo</th>
 							<th>Periodo</th>
 							<th>Ver</th>
 							<th>Generar recibo</th>	
@@ -36,7 +36,7 @@
 						
 							<td><a class="btn btn-primary btn-xs" th:href="@{/ver/} + ${archivo.idarchivo}" th:text="'VER'"></a></td>							
 							
-							<td><a class="btn btn-secondary btn-xs" th:href="@{/generarrecibos/} + ${archivo.idarchivo}" th:text="'Generar archivo'"></a></td>
+							<td><a class="btn btn-secondary btn-xs" th:href="@{/insertaregistros/} + ${archivo.nombre}" th:text="'Generar archivo'"></a></td>
 							<td><a class="btn btn-danger btn-xs"th:href="@{/eliminararchivo/} + ${archivo.idarchivo}"	th:text="'Eliminar'"onclick="return confirm('Estás seguro que quieres eliminar el archivo?');"></a></td>
 						</tr>
 					</tbody>

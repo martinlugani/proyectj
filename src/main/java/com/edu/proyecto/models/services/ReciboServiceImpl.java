@@ -23,18 +23,49 @@ import org.springframework.transaction.annotation.Transactional;
 
 
 import com.edu.proyecto.models.dao.IReciboDao;
+import com.edu.proyecto.models.entity.Categoria;
 import com.edu.proyecto.models.entity.Recibo;
+import com.edu.proyecto.models.entity.Usuario;
 
 import org.springframework.stereotype.Service;
 
 
 
 @Service
-public class ReciboServiceImpl {
+public class ReciboServiceImpl implements IReciboService{
 	
+	
+	@Autowired
+	private IReciboDao reciboDao;
+	
+	
+	@Transactional
+	public void saveAll(List<Recibo> recibo) {
+		// TODO Auto-generated method stub
+		reciboDao.saveAll(recibo);
 
+	}
+	
+	@Transactional
+	public void save(Recibo recibo) {
+		reciboDao.save(recibo);
+		
+	}
 
+	@Transactional(readOnly = true)
+	public List<Recibo> findAllRec() {
+		// TODO Auto-generated method stub
+		return (List<Recibo>)reciboDao.findAll();
+	 //return (List<Usuario>)usuarioDao.findAll();
+	}
 	
+	@Override
+	public Page<Recibo> findAllRec(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return reciboDao.findAll(pageable);
+	}
 	
-	
+		
 }
+
+
