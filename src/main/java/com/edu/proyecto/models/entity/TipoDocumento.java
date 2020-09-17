@@ -29,10 +29,10 @@ public class TipoDocumento implements Serializable{
 	@Column(unique=true)
 	private Long idtipodocumento;
 	
-	@NotEmpty
+	
 	private String descripcion;
 	
-	@NotEmpty
+	
 	private String abreviacion;
 	
 	public Long getIdtipodocumento() {

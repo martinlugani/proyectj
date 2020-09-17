@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 13-09-2020 a las 07:38:31
--- Versión del servidor: 10.3.16-MariaDB
--- Versión de PHP: 7.1.30
+-- Tiempo de generación: 16-09-2020 a las 02:10:14
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.1.32
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -39,7 +39,8 @@ CREATE TABLE `archivo` (
 --
 
 INSERT INTO `archivo` (`idarchivo`, `nombre`, `ruta`) VALUES
-(1, '4fe5dfce-5897-4db5-bcc0-432c0d6ffab3_RecibosImpotados.csv', 'abril');
+(1, '4fe5dfce-5897-4db5-bcc0-432c0d6ffab3_RecibosImpotados.csv', 'abril'),
+(2, 'a6c2b525-47aa-4b02-a4c2-de45f8ddde9f_RecibosImpotadosV2.csv', 'Agosto');
 
 -- --------------------------------------------------------
 
@@ -94,66 +95,30 @@ INSERT INTO `firma` (`idfirma`, `idusuario`, `firma`, `refirma`) VALUES
 --
 
 CREATE TABLE `recibos` (
-  `id` bigint(20) NOT NULL,
-  `concepto` varchar(255) DEFAULT NULL,
-  `idrecibo` varchar(255) DEFAULT NULL,
-  `idusuario` varchar(255) DEFAULT NULL,
-  `importe` int(11) NOT NULL,
-  `importetotal` int(11) NOT NULL,
-  `nrorecibo` varchar(255) DEFAULT NULL,
-  `tipoconcepto` varchar(255) DEFAULT NULL
+  `id` int(11) NOT NULL,
+  `idusuario` int(10) DEFAULT NULL,
+  `estado` varchar(50) DEFAULT '1',
+  `idtrax` int(10) DEFAULT NULL,
+  `periodo` varchar(50) DEFAULT NULL,
+  `idconceptouno` int(10) DEFAULT NULL,
+  `importeuno` int(10) DEFAULT NULL,
+  `idconceptodos` int(10) DEFAULT NULL,
+  `importedos` int(10) DEFAULT NULL,
+  `idconceptotres` int(10) DEFAULT NULL,
+  `importetres` int(10) DEFAULT NULL,
+  `importetotal` int(10) DEFAULT NULL,
+  `idfirmausuario` int(10) DEFAULT NULL,
+  `idfirmadmin` int(10) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `recibos`
 --
 
-INSERT INTO `recibos` (`id`, `concepto`, `idrecibo`, `idusuario`, `importe`, `importetotal`, `nrorecibo`, `tipoconcepto`) VALUES
-(1, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(2, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(3, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(4, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(5, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(6, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(7, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(8, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(9, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(10, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(11, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(12, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(13, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(14, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(15, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(16, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(17, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(18, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(19, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(20, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(21, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(22, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(23, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(24, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(25, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(26, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(27, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(28, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(29, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(30, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(31, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(32, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(33, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(34, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(35, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(36, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(37, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(38, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(39, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(40, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(41, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(42, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D'),
-(43, 'Sueldo Basico', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a5', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 1500, 1450, '234324', 'H'),
-(44, 'Jubilacion', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a6', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '234245', 'D'),
-(45, 'Obra social', '3c6fb2c9-600e-4d76-92b3-8ba2d0f392a7', '1cdf83da-2d3c-4148-9cb7-b6e063c527d7', 25, 1450, '287654', 'D');
+INSERT INTO `recibos` (`id`, `idusuario`, `estado`, `idtrax`, `periodo`, `idconceptouno`, `importeuno`, `idconceptodos`, `importedos`, `idconceptotres`, `importetres`, `importetotal`, `idfirmausuario`, `idfirmadmin`) VALUES
+(1, 1, '0', 1, 'abril', 1, 350, 2, 250, 3, 20000, NULL, NULL, NULL),
+(2, 2, '0', 2, 'Junio', 1, 450, 2, 320, 3, 24000, NULL, NULL, NULL),
+(3, 3, '0', 3, 'Agosto', 1, 350, 2, 250, 3, 27000, NULL, NULL, NULL);
 
 -- --------------------------------------------------------
 
@@ -241,7 +206,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `archivo`
 --
 ALTER TABLE `archivo`
-  MODIFY `idarchivo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
+  MODIFY `idarchivo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -259,7 +224,7 @@ ALTER TABLE `firma`
 -- AUTO_INCREMENT de la tabla `recibos`
 --
 ALTER TABLE `recibos`
-  MODIFY `id` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=4;
 
 --
 -- AUTO_INCREMENT de la tabla `tipodocumento`

@@ -15,7 +15,7 @@
 					<thead class="thead-inverse">
 						<tr>
 							<th>NroRecibo</th>
-							<th>Concepto</th>
+							<th>Usuario</th>
 							<th>Importe total</th>
 							<th>VER</th>
 							<th>PDF</th>
@@ -23,17 +23,17 @@
 					</thead>
 					<tbody>
 						<tr th:each="recibo: ${recibo}">
-							<td th:text="${recibo.idrecibo}"></td>
-							<td th:text="${recibo.concepto}"></td>
+							<td th:text="${recibo.id}"></td>
+							<td th:text="${recibo.idusuario}"></td>
 							<td th:text="${recibo.importetotal}"></td>
 
 
 							<td><a class="btn btn-primary btn-xs"
-								th:href="@{/formcategoria/} + ${recibo.idrecibo}"
-								th:text="'Editar'"></a></td>
+								th:href="@{/formcategoria/} + ${recibo.id}"
+								th:text="'VER'"></a></td>
 							<td><a class="btn btn-danger btn-xs"
-								th:href="@{/eliminarcategoria/} + ${recibo.idrecibo}"
-								th:text="'Eliminar'"
+								th:href="@{/eliminarcategoria/} + ${recibo.id}"
+								th:text="'PDF'"
 								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
 
 						</tr>

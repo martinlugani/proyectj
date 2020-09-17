@@ -23,28 +23,46 @@ public class Recibo implements Serializable{
 	@Column(unique=true)
 	private Long id;
 	
-	@CsvBindByName(column = "idrecibo")
-	private String idrecibo;
+	@CsvBindByName(column = "idtrax")
+	private Long idtrax;
 	
 	
-	@CsvBindByName(column = "nrorecibo")
-	private String nrorecibo;
+	private int estado;
 	
 	@CsvBindByName(column = "idusuario")
-	private String idusuario;
-	
-	@CsvBindByName(column = "concepto")
-	private String concepto;
-	
-	@CsvBindByName(column = "tipoconcepto")
-	private String tipoconcepto;
-	
-	@CsvBindByName(column = "importe")
-	private int importe;
-	
-	@CsvBindByName(column = "importetotal")
-	private int importetotal;
+	private Long idusuario;
 
+	
+	
+	@CsvBindByName(column = "periodo")
+	private String periodo;
+	
+	@CsvBindByName(column = "idconceptouno")
+	private int idconceptouno;
+	
+	@CsvBindByName(column = "importeuno")
+	private int importeuno;
+	
+	@CsvBindByName(column = "idconceptodos")
+	private int idconceptodos;
+	
+	@CsvBindByName(column = "importedos")
+	private int importedos;
+
+	@CsvBindByName(column = "idconceptotres")
+	private int idconceptotres;
+	
+	@CsvBindByName(column = "importetres")
+	private int importetres;
+	
+	
+	private Integer importetotal;
+	
+	
+	private Integer idfirmausuario;
+	
+	
+	private Integer idfirmadmin;
 
 	public Long getId() {
 		return id;
@@ -54,81 +72,111 @@ public class Recibo implements Serializable{
 		this.id = id;
 	}
 
-	public String getIdrecibo() {
-		return idrecibo;
-	}
-
-	public void setIdrecibo(String idrecibo) {
-		this.idrecibo = idrecibo;
-	}
-
-	public String getNrorecibo() {
-		return nrorecibo;
-	}
-
-	public void setNrorecibo(String nrorecibo) {
-		this.nrorecibo = nrorecibo;
-	}
-
-
-
-	public String getIdusuario() {
+	public Long getIdusuario() {
 		return idusuario;
 	}
 
-
-
-	public void setIdusuario(String idusuario) {
+	public void setIdusuario(Long idusuario) {
 		this.idusuario = idusuario;
 	}
 
-
-
-	public String getConcepto() {
-		return concepto;
+	public Long getIdtrax() {
+		return idtrax;
 	}
 
-
-
-	public void setConcepto(String concepto) {
-		this.concepto = concepto;
+	public void setIdtrax(Long idtrax) {
+		this.idtrax = idtrax;
 	}
 
-
-
-	public String getTipoconcepto() {
-		return tipoconcepto;
+	public String getPeriodo() {
+		return periodo;
 	}
 
-
-
-	public void setTipoconcepto(String tipoconcepto) {
-		this.tipoconcepto = tipoconcepto;
+	public void setPeriodo(String periodo) {
+		this.periodo = periodo;
 	}
 
-
-
-	public int getImporte() {
-		return importe;
+	public int getIdconceptouno() {
+		return idconceptouno;
 	}
 
-
-
-	public void setImporte(int importe) {
-		this.importe = importe;
+	public void setIdconceptouno(int idconceptouno) {
+		this.idconceptouno = idconceptouno;
 	}
 
+	public int getImporteuno() {
+		return importeuno;
+	}
 
+	public void setImporteuno(int importeuno) {
+		this.importeuno = importeuno;
+	}
 
-	public int getImportetotal() {
+	public int getIdconceptodos() {
+		return idconceptodos;
+	}
+
+	public void setIdconceptodos(int idconceptodos) {
+		this.idconceptodos = idconceptodos;
+	}
+
+	public int getImportedos() {
+		return importedos;
+	}
+
+	public void setImportedos(int importedos) {
+		this.importedos = importedos;
+	}
+
+	public int getIdconceptotres() {
+		return idconceptotres;
+	}
+
+	public void setIdconceptotres(int idconceptotres) {
+		this.idconceptotres = idconceptotres;
+	}
+
+	public int getImportetres() {
+		return importetres;
+	}
+
+	public void setImportetres(int importetres) {
+		this.importetres = importetres;
+	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+	public Integer getImportetotal() {
 		return importetotal;
 	}
 
-
-
-	public void setImportetotal(int importetotal) {
+	public void setImportetotal(Integer importetotal) {
 		this.importetotal = importetotal;
 	}
-	
 
+	public Integer getIdfirmausuario() {
+		return idfirmausuario;
+	}
+
+	public void setIdfirmausuario(Integer idfirmausuario) {
+		this.idfirmausuario = idfirmausuario;
+	}
+
+	public Integer getIdfirmadmin() {
+		return idfirmadmin;
+	}
+
+	public void setIdfirmadmin(Integer idfirmadmin) {
+		this.idfirmadmin = idfirmadmin;
+	}
+
+	
+	
+	
 }

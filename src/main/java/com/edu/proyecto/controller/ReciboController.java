@@ -83,7 +83,9 @@ public class ReciboController {
 			for (Recibo recibo : lista) {
 				System.out.println(recibo);
 			}
+			String mensajeflash = "Archivo insertado con exito!  " + archno;
 			recservice.saveAll(lista);
+			flash.addFlashAttribute("success",mensajeflash);
 			return "redirect:/listararchivos";
 			}
 		
