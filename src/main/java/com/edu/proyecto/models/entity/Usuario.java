@@ -2,19 +2,24 @@ package com.edu.proyecto.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
+import javax.persistence.OneToMany;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 
-import org.hibernate.validator.constraints.Email;
-import org.hibernate.validator.constraints.NotEmpty;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.format.annotation.DateTimeFormat;
 
 @Entity
@@ -28,38 +33,42 @@ public class Usuario implements Serializable {
 	@Column(unique=true)
 	private Long idusuario;
 
-	@NotEmpty
+	
 	private String nombre;
 	
-	@NotEmpty
+	
 	private String apellido;
 	
 	@Column(unique=true)
-	@NotEmpty
+	
 	private String usuario;
 	
-	@NotEmpty
-	@Email
+	
 	private String email;
 
-	@NotEmpty
+	
 	private Long nrodocumento;
 	
+	//°°°°FALTA EN FORMULARIO
+	@ManyToOne 
+	@JoinColumn(name="idtipodocumento")
+	public TipoDocumento tipodocumento;
 	
-	/*@NotNull
-	@Column(name = "create_at")
+	//°°°°FALTA EN FORMULARIO
+	@Column(name = "fechaAlta")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fechaAlta;
 	
-	public Date getFechaAlta() {
-		return fechaAlta;
+	
+	public TipoDocumento getTipodocumento() {
+		return tipodocumento;
 	}
 
-	public void setFechaAlta(Date fechaAlta) {
-		this.fechaAlta = fechaAlta;
-	}*/
-	
+	public void setTipodocumento(TipoDocumento tipodocumento) {
+		this.tipodocumento = tipodocumento;
+	}
+
 	public String getNombre() {
 		return nombre;
 	}
@@ -107,6 +116,22 @@ public class Usuario implements Serializable {
 
 	public void setNrodocumento(Long nrodocumento) {
 		this.nrodocumento = nrodocumento;
+	}
+
+	@Override
+	public String toString() {
+		return usuario +" ";
+
+	}
+
+	public Date getFechaAlta() {
+		return fechaAlta;
+	}
+
+	public void setFechaAlta(Date fechaAlta) {
+		this.fechaAlta = fechaAlta;
 	}	
+	
+	
 
 }

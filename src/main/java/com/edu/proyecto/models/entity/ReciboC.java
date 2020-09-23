@@ -11,13 +11,12 @@ import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
-import com.opencsv.bean.CsvBindByName;
 
 @Entity
 @Table(name = "recibos")
-
-public class Recibo implements Serializable{
+public class ReciboC  implements Serializable {
 	
+
 	private static final long serialVersionUID = 7536804169972451999L;
 	
 	@Id
@@ -25,44 +24,45 @@ public class Recibo implements Serializable{
 	@Column(unique=true)
 	private Long id;
 	
-	@CsvBindByName(column = "idtrax")
-	private Long idtrax;
-	
+	private Long idtrax;	
 	
 	private int estado;
 	
-	@CsvBindByName(column = "idusuario")
-	private Long idusuario;
 	
-	@CsvBindByName(column = "periodo")
 	private String periodo;
 	
-	@CsvBindByName(column = "idconceptouno")
 	private int idconceptouno;
 	
-	@CsvBindByName(column = "importeuno")
+	private String conceptouno;
+	
 	private int importeuno;
 	
-	@CsvBindByName(column = "idconceptodos")
 	private int idconceptodos;
 	
-	@CsvBindByName(column = "importedos")
+	private String conceptodos;
+	
 	private int importedos;
 
-	@CsvBindByName(column = "idconceptotres")
 	private int idconceptotres;
 	
-	@CsvBindByName(column = "importetres")
-	private int importetres;
+	private String conceptotres;
 	
+	private int importetres;
 	
 	private Integer importetotal;
 	
-	
 	private Integer idfirmausuario;
 	
-	
 	private Integer idfirmadmin;
+	
+	@ManyToOne 
+	@JoinColumn(name="idusuario")
+	public Usuario usuario;
+	
+	@ManyToOne 
+	@JoinColumn(name="idempresa")
+	public Empresa empresa;
+
 
 	public Long getId() {
 		return id;
@@ -72,14 +72,6 @@ public class Recibo implements Serializable{
 		this.id = id;
 	}
 
-	public Long getIdusuario() {
-		return idusuario;
-	}
-
-	public void setIdusuario(Long idusuario) {
-		this.idusuario = idusuario;
-	}
-
 	public Long getIdtrax() {
 		return idtrax;
 	}
@@ -87,6 +79,16 @@ public class Recibo implements Serializable{
 	public void setIdtrax(Long idtrax) {
 		this.idtrax = idtrax;
 	}
+
+	public int getEstado() {
+		return estado;
+	}
+
+	public void setEstado(int estado) {
+		this.estado = estado;
+	}
+
+
 
 	public String getPeriodo() {
 		return periodo;
@@ -144,14 +146,6 @@ public class Recibo implements Serializable{
 		this.importetres = importetres;
 	}
 
-	public int getEstado() {
-		return estado;
-	}
-
-	public void setEstado(int estado) {
-		this.estado = estado;
-	}
-
 	public Integer getImportetotal() {
 		return importetotal;
 	}
@@ -176,7 +170,37 @@ public class Recibo implements Serializable{
 		this.idfirmadmin = idfirmadmin;
 	}
 
-	
+	public Usuario getUsuario() {
+		return usuario;
+	}
+
+	public void setUsuario(Usuario usuario) {
+		this.usuario = usuario;
+	}
+
+	public String getConceptouno() {
+		return conceptouno;
+	}
+
+	public void setConceptouno(String conceptouno) {
+		this.conceptouno = conceptouno;
+	}
+
+	public String getConceptodos() {
+		return conceptodos;
+	}
+
+	public void setConceptodos(String conceptodos) {
+		this.conceptodos = conceptodos;
+	}
+
+	public String getConceptotres() {
+		return conceptotres;
+	}
+
+	public void setConceptotres(String conceptotres) {
+		this.conceptotres = conceptotres;
+	}
 	
 	
 }

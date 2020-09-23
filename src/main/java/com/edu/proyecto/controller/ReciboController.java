@@ -17,6 +17,8 @@ import java.util.Map;
 
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
@@ -34,9 +36,11 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 import com.edu.proyecto.models.entity.Archivo;
 import com.edu.proyecto.models.entity.Categoria;
 import com.edu.proyecto.models.entity.Recibo;
+import com.edu.proyecto.models.entity.ReciboC;
 import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IArchivoService;
 import com.edu.proyecto.models.services.IReciboService;
+import com.edu.proyecto.models.services.IReciboCService;
 import com.edu.proyecto.util.paginator.PageRender;
 import com.opencsv.CSVReaderHeaderAware;
 import com.opencsv.bean.CsvToBean;
@@ -55,8 +59,29 @@ public class ReciboController {
 	private IReciboService recservice;
 	
 	@Autowired
+	private IReciboCService receservice;
+	
+	@Autowired
 	private IArchivoService archivoservice;
 
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
+
+	@GetMapping(value = "/verecibo/{id}")
+	public String ver(@PathVariable(value = "id") Long id, Model model, RedirectAttributes flash) {
+
+		//Factura factura = receservice.fetchFacturaByIdWithClienteWhithItemFacturaWithProducto(id); // clienteService.findFacturaById(id);
+		ReciboC  reciboc = receservice.findOne(id);
+
+		if (reciboc == null) {
+			flash.addFlashAttribute("error", "La factura no existe en la base de datos!");
+			return "redirect:/listarecibos";
+		}
+
+		model.addAttribute("reciboc", reciboc);
+		return "verecibo";
+	}
+	
 	@GetMapping(value = "/insertaregistros/{nombre}")
 	public String insertar(@PathVariable(value = "nombre") String nombre, Map<String, Object> model, RedirectAttributes flash) throws IOException {
 		System.out.print(nombre);
@@ -94,15 +119,17 @@ public class ReciboController {
 	public String listarecibos(@RequestParam(name="page", defaultValue="0") int page,Model model) {
 		Pageable pageRequest = PageRequest.of(page, 4);
 
-		Page<Recibo> recibo = recservice.findAllRec(pageRequest);
+		Page<ReciboC> reciboc = receservice.findAllRec(pageRequest);
 		
-		PageRender<Recibo> pageRender = new PageRender<Recibo>("/listarecibos", recibo);
+		PageRender<ReciboC> pageRender = new PageRender<ReciboC>("/listarecibos", reciboc);
 				
 		model.addAttribute("titulo", "Listado de recibo");
-		model.addAttribute("recibo", recservice.findAllRec());
+		model.addAttribute("reciboc", receservice.findAllRec());
 		model.addAttribute("page", pageRender);
 		return "listarecibos";
 		
 	}	
+	
+	
 }
 

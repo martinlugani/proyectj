@@ -1,0 +1,97 @@
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+
+		<div class="card bg-light">
+			<div class="card-header" th:text="${titulo}"></div>
+			<div class="card-body">
+
+				<h4 class="card-title">
+					<a th:href="@{/listarecibos}" class="btn btn-light btn-xs">&laquo;
+						volver</a> <a class="btn btn-danger btn-xs float-right"
+						th:href="@{'/verecibo/' + ${reciboc.id}(format=pdf)}">PDF</a>
+				</h4>
+				<ul class="list-group my-2">
+					<li class="list-group-item list-group-item-info"
+						th:text="'EMPRESA '"></li>
+					<li class="list-group-item" th:text="${reciboc.empresa.empresa}"></li>
+					<li class="list-group-item" th:text="${reciboc.empresa.cuit}"></li>
+					<li class="list-group-item" th:text="${reciboc.empresa.direccion}"></li>
+					<li class="list-group-item"
+						th:text="${reciboc.empresa.fechainicioactividades}"></li>
+
+
+				</ul>
+				<ul class="list-group my-2">
+					<li class="list-group-item list-group-item-success"
+						th:text="'Datos del recibo'"></li>
+					<li class="list-group-item"
+						th:text="'NRO RECIBO: ' + ${reciboc.id}"></li>
+					<li class="list-group-item"
+						th:text="'PERIODO DE LIQUIDACION: ' + ${reciboc.periodo}"></li>
+					<li class="list-group-item"
+						th:text="'Forma de pago : Banco Nacion ' "></li>
+					<li class="list-group-item"
+						th:text="'Nro cuenta : 0030 2053 09 1234567899 '"></li>
+				</ul>
+
+				<ul class="list-group my-2">
+					<li class="list-group-item list-group-item-primary"
+						th:text="'Datos del usuario'"></li>
+					<li class="list-group-item"
+						th:text="'NOMBRE :   ' + ${reciboc.usuario.nombre}"></li>
+					<li class="list-group-item"
+						th:text="'APELLIDO : ' + ${reciboc.usuario.apellido}"></li>
+					<li class="list-group-item"
+						th:text="'NRO DOCUMENTO   ' + ${reciboc.usuario.nrodocumento}"></li>
+					<li class="list-group-item"
+						th:text="'EMAIL :   ' + ${reciboc.usuario.email}"></li>
+					<li class="list-group-item"
+						th:text="'FECHA DE INGRESO :   ' + ${reciboc.usuario.fechaAlta}"></li>
+					<li class="list-group-item"
+						th:text="'*CATEGORIA :   Empleado de planta'"></li>
+					<li class="list-group-item"
+						th:text="'*TIPO DE CONTRATO  : Completo '"></li>
+				</ul>
+				<table class="table table-striped table-hover table-bordered my-3">
+					<thead>
+						<tr>
+							<th>Concepto</th>
+							<th>Importe</th>
+						</tr>
+					</thead>
+					<tbody>
+						<tr>
+							<td th:text="${reciboc.conceptotres}"></td>
+							<td th:text="${reciboc.importetres}"></td>
+						</tr>
+						<tr>
+							<td th:text="${reciboc.conceptouno}"></td>
+							<td th:text="${reciboc.importeuno}"></td>
+
+						</tr>
+						<tr>
+							<td th:text="${reciboc.conceptodos}"></td>
+							<td th:text="${reciboc.importedos}"></td>
+						</tr>
+					</tbody>
+					</ul>
+				</table>
+				<h5 class="float-right">
+					<span>Sueldo neto</span>: <span th:text="${reciboc.importetotal}"
+						class="badge badge-secondary"></span>
+				</h5>
+				<a th:href="@{/listarecibos}" class="btn btn-light btn-xs">&laquo;
+					volver</a>
+			</div>
+		</div>
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

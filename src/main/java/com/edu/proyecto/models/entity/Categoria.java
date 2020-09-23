@@ -13,7 +13,6 @@ import javax.persistence.TemporalType;
 import javax.validation.constraints.NotNull;
 import javax.validation.constraints.Null;
 
-import org.hibernate.validator.constraints.NotEmpty;
 
 @Entity
 @Table(name = "categoria")
@@ -29,10 +28,9 @@ public class Categoria implements Serializable{
 	@Column(unique=true)
 	private Long idcategoria;
 	
-	@NotEmpty
 	private String descripcion;
 	
-	@NotEmpty
+	
 	private String porcentaje;
 	
 	@Column(nullable = false)
