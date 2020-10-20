@@ -54,14 +54,15 @@ public class FirmaController {
 	}
 
 	
-	@RequestMapping(value="/eliminarfirma/{idfirma}")
-	public String eliminar(@PathVariable(value="idfirma") Long idfirma,RedirectAttributes flash) {
+	@RequestMapping(value="/eliminarfirma/{usuarioid}")
+	public String eliminar(@PathVariable(value="usuarioid") Long usuarioid,RedirectAttributes flash) {
 		
-		if(idfirma > 0) {
-			firmaService.delete(idfirma);
+		if(usuarioid > 0) {
+			firmaService.delete(usuarioid);
 			flash.addFlashAttribute("success", "Firma eliminado con éxito!");
 		}
 		return "redirect:/listar";
 	}
+	
 	
 }

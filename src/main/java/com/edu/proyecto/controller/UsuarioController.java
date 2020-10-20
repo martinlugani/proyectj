@@ -1,7 +1,22 @@
 package com.edu.proyecto.controller;
 
+import java.io.IOException;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.Paths;
+import java.util.List;
 import java.util.Map;
+import java.util.Properties;
+import java.util.UUID;
+import java.util.logging.Logger;
 
+import javax.mail.Message;
+import javax.mail.MessagingException;
+import javax.mail.Session;
+import javax.mail.Transport;
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
 import org.springframework.beans.factory.annotation.Autowired;
@@ -22,8 +37,10 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.proyecto.models.entity.Firma;
+import com.edu.proyecto.models.entity.TipoDocumento;
 import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IFirmaService;
+import com.edu.proyecto.models.services.ITipoDocumentoService;
 import com.edu.proyecto.models.services.IUsuarioService;
 import com.edu.proyecto.util.paginator.PageRender;
 
@@ -37,10 +54,19 @@ public class UsuarioController {
 	@Autowired
 	private IFirmaService firmaService;
 	
+	@Autowired
+	private ITipoDocumentoService tipodocumentoservice;
+	
+	
+	
+	
+	
+	
 	@Value("${application.controllers.mensaje}")
 	private String mensaje;
 	
-	private String molestia;
+//	private String molestia;
+	
 	
 	@GetMapping("/")
 	public String inicio(Model model) {
@@ -86,22 +112,38 @@ public class UsuarioController {
 		return "verusuario";
 	}
 	
+	public  Long idusuariomail;
+	public  String mailnuevo;
+	public  String passnuevo;
+	public String usuarionuevo;
+
 	@RequestMapping(value = "/form")
-	public String crear(Map<String, Object> model) {
+	public String crear( Model model) {
 
 		Usuario usuario = new Usuario();
-		model.put("usuario", usuario);
-		model.put("titulo", "Formulario de usuario");
+		List<TipoDocumento> findAll = tipodocumentoservice.findAll();
+		
+		
+		model.addAttribute("titulo", "Formulario de usuario");
+		model.addAttribute("usuario", usuario);
+		model.addAttribute("tipodocumento", findAll);
+//		System.out.print("NUEVO USUARIO "+usuario.getIdusuario());
+//		idusuariomail = usuario.getIdusuario() ;
+//		mailnuevo = usuario.getEmail();
+//		passnuevo = usuario.getContrasena();
+		
+//		enviarmailpass();
+
 		return "form";
 	}
 	
-	@RequestMapping(value="/form/{id}")
-	public String editar(@PathVariable(value="id") Long id,RedirectAttributes flash, Map<String, Object> model) {
+	@RequestMapping(value="/form/{idusuario}")
+	public String editar(@PathVariable(value="idusuario") Long idusuario,RedirectAttributes flash, Map<String, Object> model) {
 		
 		Usuario usuario = null;
 		
-		if(id > 0) {
-			usuario = usuarioService.findOne(id);
+		if(idusuario > 0) {
+			usuario = usuarioService.findOne(idusuario);
 			if(usuario == null) {
 				flash.addFlashAttribute("error","El id de usuario no puede ser cero!");
 				return "redirect:/listar";
@@ -112,22 +154,45 @@ public class UsuarioController {
 		}
 		model.put("usuario", usuario);
 		model.put("titulo", "Editar usuario");
+		
 		return "form";
 	}
+	
+	public static Long maxUsuario;
+	
+
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
+		
+
+		List<TipoDocumento> findAll = tipodocumentoservice.findAll();
 
 		if (result.hasErrors()) {
+			model.addAttribute("tipodocumento", findAll);
 			model.addAttribute("titulo", "Formulario de usuario");
-			return "form";
+			return "form";	
+		}		
+			String uniqueFilename = UUID.randomUUID().toString();
+						
+			flash.addFlashAttribute("info", "Has generado la contraseña '" + uniqueFilename);
+			usuario.setContrasena(uniqueFilename);
 			
-		}
+			usuario.getIdusuario();
+			
 		String mensajeflash = (usuario.getIdusuario() != null) ? "Usuario editado con exito!" : "Usuario creado con exito!";
 
 		usuarioService.save(usuario);
 		status.setComplete();
 		flash.addFlashAttribute("success",mensajeflash);
+
+		System.out.print("NUEVO USUARIO "+usuario.getIdusuario());
+		idusuariomail = usuario.getIdusuario() ;
+		mailnuevo = usuario.getEmail();
+		passnuevo = usuario.getContrasena();
+		usuarionuevo = usuario.getNick();
+		
+		enviarmailpass();
 		return "redirect:listar";
 	}
 	
@@ -152,7 +217,7 @@ public class UsuarioController {
 	public String crearfirma(Map<String, Object> model) {
 		System.out.print(idusuario);
 		Firma firma = new Firma();
-		firma.setIdusuario(idusuario);
+		firma.setUsuarioid(idusuario);
 
 		model.put("firma", firma);
 		model.put("titulo", "Formulario de firma");
@@ -167,39 +232,93 @@ public class UsuarioController {
 
 		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de firma");
-			firma.setIdusuario(idusuario); //aca se guarda realmente
+			firma.setUsuarioid(idusuario); //aca se guarda realmente
 			System.out.print(idusuario);
 
 			return "listar";
 		}
-		firma.setIdusuario(idusuario);
+		firma.setUsuarioid(idusuario);
 		System.out.print(idusuario);
 		
-		String mensajeFlash = (firma.getIdfirma() != null)? "firma editado con éxito!" : "Firma creado con éxito!";
+		String mensajeFlash = (firma.getUsuarioid() != null)? "firma editado con éxito!" : "Firma creado con éxito!";
 		firmaService.save(firma);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeFlash);
 		return "redirect:listar";
 	}
 	
+	public String enviarmailpass() {
+		
+	Usuario usuario = new Usuario();
+	
+	List<Usuario> findAllUse = usuarioService.findAll();
+
+		System.out.println( "Hello World!" );
+        Properties propiedad = new Properties();
+        propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
+        propiedad.setProperty("mail.smtp.starttls.enable", "true");
+        propiedad.setProperty("mail.smtp.port", "587");
+        propiedad.setProperty("mail.smtp.auth", "true");
+        
+        
+//      mailnuevo = usuario.getEmail();
+//		passnuevo = usuario.getContrasena();
+        Session sesion = Session.getDefaultInstance(propiedad);
+        
+        String correoEnvia = "hedlanrecibos@gmail.com";//tu correo gmaildesde donde se envia 
+        String contrasena = "lanabanana";//tu contraseña de acceso a gmaila esa cuenta
+        
+        String receptor = mailnuevo; //cuenta que recibe
+        
+        String asunto = "Bienvenido al sistema de RECIBOS HEDLAN";
+        String mensaje= new String ("Estimado usuario   "+usuarionuevo
+        		+ " Se acaba de dar de alta su usuario en el sistema 	"
+        		+ "					sus credenciales son:		"
+        		+ "USUARIO	 " + usuarionuevo
+        		+ "CONTRASEÑA "+ passnuevo
+        		+ "su contraseña es temporal, ingrese al siguiente link para cambiar su password "
+        		+ "http://localhost:8080/nuevapass/"+idusuariomail   ) 		;
+
+        MimeMessage mail = new MimeMessage(sesion);
+        try {
+            mail.setFrom(new InternetAddress (correoEnvia));
+            mail.addRecipient(Message.RecipientType.TO, new InternetAddress (receptor));
+            mail.setSubject(asunto);
+            mail.setText(mensaje);
+            
+            Transport transportar = sesion.getTransport("smtp");
+            transportar.connect(correoEnvia,contrasena);
+            transportar.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));          
+            transportar.close();
+            
+           
+            
+            
+        } catch (AddressException ex) {
+            Logger.getLogger(ex.toString());
+            System.err.println(ex);
+        } catch (MessagingException ex) {
+            Logger.getLogger(ex.toString());
+            System.err.println(ex);
+        }
+        
+        
+        Logger.getLogger("Enviado");
+        
+        
+//        try {
+//			EmailClient.sendAsHtml("tincholan10@gmail.com",
+//			        "Martin te manda esto",
+//			        "<h2>Java Mail Example</h2><p>hi there!</p>");
+//		} catch (MessagingException e) {
+//			// TODO Auto-generated catch block
+//			e.printStackTrace();
+//		}
+    
+    
+		return "listar";
+		
+	}
+	
 	
 }
-
-/*@RequestMapping(value="/formfirma/{idusuario}")
-public String editar(@PathVariable(value="idusuario") Long idusuario,RedirectAttributes flash, Map<String, Object> model) {
-	Usuario usuario = null;
-	
-	if(idusuario > 0) {
-		usuario = usuarioService.findOne(idusuario);
-		if(usuario == null) {
-			flash.addFlashAttribute("error","El id de usuario no puede ser cero!");
-			return "redirect:/listar";
-		}
-	} else {
-		flash.addFlashAttribute("error", "El ID del cliente no puede ser cero!");
-		return "redirect:/listar";
-	}
-	model.put("firma", firma);
-	model.put("titulo", "Editar firma");
-	return "formfirma";
-}*/

@@ -1,0 +1,46 @@
+<!---->
+<!DOCTYPE HTML>
+<html xmlns:th="http://www.thymeleaf.org">
+<head th:replace="layout/layout :: head"></head>
+<body>
+	<header th:replace="layout/layout :: header"></header>
+
+	<div class="container py-4">
+
+		<div class="card border-primary text-center">
+			<div class="card-header">Por favor Ingrese la contraseña asignada y la nueva contraseña</div>
+			<div class="card-body">
+
+				<form th:action="@{/nuevapass}" method="post">
+
+					<div class="form-group row">
+						<label for="firma" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Constraseña</label>
+						<div class="form-group col-sm-6">
+							<input type="password" name="contraseña" id="contraseña" class="form-control"
+								placeholder="Firma" autofocus required />
+						</div>
+					</div>
+			</div>
+			<div class="form-group row">
+				<label for="contraseña" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Nueva Contraseña</label>
+				<div class="form-group col-sm-6">
+					<input type="password" name="contraseña" id="contraseña" class="form-control"
+						placeholder="Repita firma" autofocus required />
+				</div>
+			</div>
+		
+
+	<div class="form-group text-right">
+		<div class="form-group col-sm-6">
+
+			<input type="submit" class="btn btn-secondary  btn-block"	value="GUARDAR" />
+			
+			
+		</div>
+	</div>
+	</form>
+
+	</div>
+	<footer th:replace="layout/layout :: footer"></footer>
+</body>
+</html>

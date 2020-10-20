@@ -1,6 +1,7 @@
 package com.edu.proyecto.models.entity;
 
 import java.io.Serializable;
+import java.security.SecureRandom;
 import java.util.Date;
 import java.util.List;
 
@@ -14,6 +15,7 @@ import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.OneToMany;
+import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
 import javax.persistence.TemporalType;
@@ -39,20 +41,29 @@ public class Usuario implements Serializable {
 	
 	private String apellido;
 	
-	@Column(unique=true)
 	
-	private String usuario;
+	private String nick;
 	
 	
 	private String email;
 
 	
-	private Long nrodocumento;
+	private String nrodocumento;
+	
+/*	 @Column(nullable = false, columnDefinition = "TINYINT(1)") 
+	 private boolean administrador; 
+
+	 @Column(nullable = false, columnDefinition = "TINYINT(1)") 
+	 private boolean consulta; */
 	
 	//°°°°FALTA EN FORMULARIO
 	@ManyToOne 
 	@JoinColumn(name="idtipodocumento")
 	public TipoDocumento tipodocumento;
+	
+/*	@ManyToOne 
+	@JoinColumn(name="idfirma")
+	public Firma firma;*/
 	
 	//°°°°FALTA EN FORMULARIO
 	@Column(name = "fechaAlta")
@@ -61,17 +72,13 @@ public class Usuario implements Serializable {
 	private Date fechaAlta;
 	
 	
-	public TipoDocumento getTipodocumento() {
-		return tipodocumento;
-	}
+	//https://www.baeldung.com/jpa-one-to-one
+	@OneToOne(mappedBy = "usuario" , cascade = CascadeType.ALL)
+    private Firma firma;
+	
+//	private SecureRandom random = new SecureRandom();
 
-	public void setTipodocumento(TipoDocumento tipodocumento) {
-		this.tipodocumento = tipodocumento;
-	}
-
-	public String getNombre() {
-		return nombre;
-	}
+	private String contrasena;
 
 	public Long getIdusuario() {
 		return idusuario;
@@ -79,6 +86,10 @@ public class Usuario implements Serializable {
 
 	public void setIdusuario(Long idusuario) {
 		this.idusuario = idusuario;
+	}
+
+	public String getNombre() {
+		return nombre;
 	}
 
 	public void setNombre(String nombre) {
@@ -93,6 +104,14 @@ public class Usuario implements Serializable {
 		this.apellido = apellido;
 	}
 
+	public String getNick() {
+		return nick;
+	}
+
+	public void setNick(String nick) {
+		this.nick = nick;
+	}
+
 	public String getEmail() {
 		return email;
 	}
@@ -100,28 +119,21 @@ public class Usuario implements Serializable {
 	public void setEmail(String email) {
 		this.email = email;
 	}
-	
 
-	public String getUsuario() {
-		return usuario;
-	}
-
-	public void setUsuario(String usuario) {
-		this.usuario = usuario;
-	}
-
-	public Long getNrodocumento() {
+	public String getNrodocumento() {
 		return nrodocumento;
 	}
 
-	public void setNrodocumento(Long nrodocumento) {
+	public void setNrodocumento(String nrodocumento) {
 		this.nrodocumento = nrodocumento;
 	}
 
-	@Override
-	public String toString() {
-		return usuario +" ";
+	public TipoDocumento getTipodocumento() {
+		return tipodocumento;
+	}
 
+	public void setTipodocumento(TipoDocumento tipodocumento) {
+		this.tipodocumento = tipodocumento;
 	}
 
 	public Date getFechaAlta() {
@@ -130,8 +142,23 @@ public class Usuario implements Serializable {
 
 	public void setFechaAlta(Date fechaAlta) {
 		this.fechaAlta = fechaAlta;
-	}	
-	
-	
+	}
 
+	public Firma getFirma() {
+		return firma;
+	}
+
+	public void setFirma(Firma firma) {
+		this.firma = firma;
+	}
+
+	public String getContrasena() {
+		return contrasena;
+	}
+
+	public void setContrasena(String contrasena) {
+		this.contrasena = contrasena;
+	}
+	
+	
 }

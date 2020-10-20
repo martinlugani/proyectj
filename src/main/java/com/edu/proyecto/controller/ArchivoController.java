@@ -42,6 +42,49 @@ public class ArchivoController {
 	
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
+	@RequestMapping(value = "/formarchivo")
+	public String crear(Map<String, Object> model) {
+
+		Archivo archivo = new Archivo();
+		model.put("archivo", archivo);
+		model.put("titulo", "Importar archivo");
+		return "formarchivo";
+	}
+
+	@RequestMapping(value = "/formarchivo", method = RequestMethod.POST)
+	public String guardar(@Valid Archivo archivo, BindingResult result, Model model,
+			@RequestParam("file") MultipartFile archivito, RedirectAttributes flash, SessionStatus status) {
+
+		if (result.hasErrors()) {
+			model.addAttribute("titulo", "Formulario de archivo");
+			return "formarchivo";
+		}
+
+		if (!archivito.isEmpty()) {
+			String uniqueFilename = UUID.randomUUID().toString() + "_" + archivito.getOriginalFilename();
+			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
+			Path rootAbsoloutPath = rootPath.toAbsolutePath();
+			
+			log.info("rootPath: " + rootPath);
+			log.info("rootPath: " + rootAbsoloutPath);
+			
+			try {
+				Files.copy(archivito.getInputStream(), rootAbsoloutPath);
+				flash.addFlashAttribute("info", "Has subido correctamente'" + uniqueFilename + "'");
+				archivo.setNombre(uniqueFilename);
+
+			} catch (IOException e) {
+				e.printStackTrace();
+			}
+		}
+
+		String mensajeFlash = (archivo.getIdarchivo() < 0) ? "Archivo editado con éxito!" : "Archivo creado con éxito!";
+		archivoService.save(archivo);
+		status.setComplete();
+		flash.addFlashAttribute("success", mensajeFlash);
+		return "redirect:listararchivos";
+	}
+	
 	@GetMapping(value = "/ver/{idarchivo}")
 	public String ver(@PathVariable(value = "idarchivo") Long id, Map<String, Object> model, RedirectAttributes flash) {
 
@@ -70,52 +113,6 @@ public class ArchivoController {
 		model.addAttribute("page", pageRender);
 		return "listararchivos";
 	}
-
-	@RequestMapping(value = "/formarchivo")
-	public String crear(Map<String, Object> model) {
-
-		Archivo archivo = new Archivo();
-		model.put("archivo", archivo);
-		model.put("titulo", "Importar archivo");
-		return "formarchivo";
-	}
-
-	@RequestMapping(value = "/formarchivo", method = RequestMethod.POST)
-	public String guardar(@Valid Archivo archivo, BindingResult result, Model model,
-			@RequestParam("file") MultipartFile archivito, RedirectAttributes flash, SessionStatus status) {
-
-		if (result.hasErrors()) {
-			model.addAttribute("titulo", "Formulario de archivo");
-			return "formarchivo";
-		}
-
-		if (!archivito.isEmpty()) {
-			
-			String uniqueFilename = UUID.randomUUID().toString() + "_" + archivito.getOriginalFilename();
-			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
-			Path rootAbsoloutPath = rootPath.toAbsolutePath();
-			
-			log.info("rootPath: " + rootPath);
-			log.info("rootPath: " + rootAbsoloutPath);
-			
-			try {
-				Files.copy(archivito.getInputStream(), rootAbsoloutPath);
-				
-				flash.addFlashAttribute("info", "Has subido correctamente'" + uniqueFilename + "'");
-				archivo.setNombre(uniqueFilename);
-
-			} catch (IOException e) {
-				e.printStackTrace();
-			}
-		}
-
-		String mensajeFlash = (archivo.getIdarchivo() < 0) ? "Archivo editado con éxito!" : "Archivo creado con éxito!";
-		archivoService.save(archivo);
-		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
-		return "redirect:listararchivos";
-	}
-	
 
 	@RequestMapping(value="/eliminararchivo/{idarchivo}")
 	public String eliminar(@PathVariable(value="idarchivo") Long idarchivo,RedirectAttributes flash) {

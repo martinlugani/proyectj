@@ -40,7 +40,7 @@ public class TipoDocumento implements Serializable{
 	private String abreviacion;
 	
 	
-	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL, orphanRemoval = true)
+	@OneToMany(mappedBy = "tipodocumento", fetch = FetchType.LAZY, cascade = CascadeType.ALL , orphanRemoval = true)
 	private List<Usuario> usuario;
 	
 	public List<Usuario> getUsuario() {

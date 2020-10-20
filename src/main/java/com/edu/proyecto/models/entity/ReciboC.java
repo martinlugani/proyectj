@@ -35,21 +35,21 @@ public class ReciboC  implements Serializable {
 	
 	private String conceptouno;
 	
-	private int importeuno;
+	private Long importeuno;
 	
 	private int idconceptodos;
 	
 	private String conceptodos;
 	
-	private int importedos;
+	private Long importedos;
 
 	private int idconceptotres;
 	
 	private String conceptotres;
 	
-	private int importetres;
+	private Long importetres;
 	
-	private Integer importetotal;
+	private Long importetotal;
 	
 	private Integer idfirmausuario;
 	
@@ -106,11 +106,11 @@ public class ReciboC  implements Serializable {
 		this.idconceptouno = idconceptouno;
 	}
 
-	public int getImporteuno() {
+	public Long getImporteuno() {
 		return importeuno;
 	}
 
-	public void setImporteuno(int importeuno) {
+	public void setImporteuno(Long importeuno) {
 		this.importeuno = importeuno;
 	}
 
@@ -122,11 +122,11 @@ public class ReciboC  implements Serializable {
 		this.idconceptodos = idconceptodos;
 	}
 
-	public int getImportedos() {
+	public Long getImportedos() {
 		return importedos;
 	}
 
-	public void setImportedos(int importedos) {
+	public void setImportedos(Long importedos) {
 		this.importedos = importedos;
 	}
 
@@ -138,19 +138,19 @@ public class ReciboC  implements Serializable {
 		this.idconceptotres = idconceptotres;
 	}
 
-	public int getImportetres() {
+	public Long getImportetres() {
 		return importetres;
 	}
 
-	public void setImportetres(int importetres) {
+	public void setImportetres(Long importetres) {
 		this.importetres = importetres;
 	}
 
-	public Integer getImportetotal() {
+	public Long getImportetotal() {
 		return importetotal;
 	}
 
-	public void setImportetotal(Integer importetotal) {
+	public void setImportetotal(Long importetotal) {
 		this.importetotal = importetotal;
 	}
 
