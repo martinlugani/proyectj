@@ -14,9 +14,16 @@ public interface IReciboCService {
 	public void saveAll(List<ReciboC> lista);
 	
 	public List<ReciboC> findAllRec();
+	
+	public List<ReciboC> findAllById(Long idusuario);
 
 	public Page<ReciboC> findAllRec(Pageable pageable);
 
 	public ReciboC findOne(Long id);
+	
+	
+	public List<ReciboC> findByIdUsuario(Usuario usuario);
+
+	public void save(ReciboC reciboC2);
 
 }

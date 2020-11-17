@@ -1,17 +1,41 @@
 <!DOCTYPE html>
-<html xmlns:th="http://www.thymeleaf.org">
-<head th:replace="layout/layout :: head"></head>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:replace="layout/layout :: head">
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/style.css}"></link>
+<link rel="stylesheet" th:href="@{/css/signin.css}"></link>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+</head>
 <body>
 	<header th:replace="layout/layout :: header"></header>
+
+
 	<div class="container py-4">
 		<div class="card bg-light">
 			<div class="card-header" th:text="${titulo}"></div>
 			<div class="card-body">
 
-				<h4 class="card-title">
+				<div class="dropdown show">
+					<a class="btn btn-secondary dropdown-toggle" href="#" role="button"
+						id="dropdownMenuLink" data-toggle="dropdown" aria-haspopup="true"
+						aria-expanded="false"> Seleccione estado </a>
 
-				</h4>
+					<div class="dropdown-menu" aria-labelledby="dropdownMenuLink">
+						<a class="dropdown-item" th:href="@{/listarecibos/1}">Recibos sin firma</a> 
+						<a class="dropdown-item" th:href="@{/listarecibos/2}">Recibos sin firma usuario</a> 
+						<a class="dropdown-item" th:href="@{/listarecibos/3}">Recibos firmados</a>
+					</div>
+				</div>
+
+
+				<h4 class="card-title"></h4>
 				<table class="table table-striped table-bordered">
+
 					<thead class="thead-inverse">
 						<tr>
 							<th>NroRecibo</th>
@@ -28,23 +52,35 @@
 							<td th:text="${reciboc.usuario.nombre}"></td>
 							<td th:text="${reciboc.usuario.apellido}"></td>
 							<td th:text="${reciboc.usuario.nrodocumento}"></td>
-							
+
 							<td th:text="${reciboc.importetotal}"></td>
 
 
 							<td><a class="btn btn-primary btn-xs"
-								th:href="@{/verecibo/} + ${reciboc.id}"
-								th:text="'VER'"></a></td>
 							
+								th:href="@{/verecibo/} + ${reciboc.id}" th:text="'VER'"></a></td>
+
+
 						</tr>
 					</tbody>
 
 				</table>
-				<nav th:replace="paginator-nav :: paginator"></nav>
+				
+				<a class="btn btn-success btn-xs" th:if="${estado} == true"  th:href="@{/primerainstanciafirmasiva/}" th:text="'Firma masiva'"></a>
+				
+				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
+				
+				<a class="btn btn-info btn-xs" th:if="false" th:href="@{/formfirma/}" th:text="'Firma masiva'"></a>
+				
+		
+				
+			
 
 			</div>
 		</div>
 	</div>
+	
+	
 	<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

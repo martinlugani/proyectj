@@ -9,6 +9,7 @@ import org.springframework.transaction.annotation.Transactional;
 
 import com.edu.proyecto.models.dao.IFirmaDao;
 import com.edu.proyecto.models.entity.Firma;
+import com.edu.proyecto.models.entity.Usuario;
 
 
 
@@ -60,5 +61,10 @@ public class FirmaServiceImpl implements IFirmaService{
 		return firmaDao.findAll(pageable);
 	}
 
+	@Override
+	public Firma findByUsuario(Usuario usuario) {
+		// TODO Auto-generated method stub
+		return firmaDao.findByUsuario(usuario);
+	}
 	
 }

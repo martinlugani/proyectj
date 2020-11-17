@@ -17,5 +17,7 @@ public interface IFirmaService {
 	
 	public Firma findOneFirma(Long idfirma);
 	
+	public Firma findByUsuario(Usuario usuario);
+	
 	public void delete(Long idusuario);
 }

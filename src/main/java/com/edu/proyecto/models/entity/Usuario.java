@@ -42,7 +42,7 @@ public class Usuario implements Serializable {
 	private String apellido;
 	
 	
-	private String nick;
+	private String username;
 	
 	
 	private String email;
@@ -66,20 +66,23 @@ public class Usuario implements Serializable {
 	public Firma firma;*/
 	
 	//°°°°FALTA EN FORMULARIO
-	@Column(name = "fechaAlta")
+	@Column(name = "fecha_alta")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date fechaAlta;
+	private Date fecha_alta;
 	
 	
 	//https://www.baeldung.com/jpa-one-to-one
-	@OneToOne(mappedBy = "usuario" , cascade = CascadeType.ALL)
-    private Firma firma;
+
 	
 //	private SecureRandom random = new SecureRandom();
 
-	private String contrasena;
+	private String password;
 
+	private Long enable;
+	
+	private Long activo;
+	
 	public Long getIdusuario() {
 		return idusuario;
 	}
@@ -104,12 +107,12 @@ public class Usuario implements Serializable {
 		this.apellido = apellido;
 	}
 
-	public String getNick() {
-		return nick;
+	public String getUsername() {
+		return username;
 	}
 
-	public void setNick(String nick) {
-		this.nick = nick;
+	public void setUsername(String username) {
+		this.username = username;
 	}
 
 	public String getEmail() {
@@ -136,29 +139,41 @@ public class Usuario implements Serializable {
 		this.tipodocumento = tipodocumento;
 	}
 
-	public Date getFechaAlta() {
-		return fechaAlta;
+	public Date getFecha_alta() {
+		return fecha_alta;
 	}
 
-	public void setFechaAlta(Date fechaAlta) {
-		this.fechaAlta = fechaAlta;
+	public void setFecha_alta(Date fecha_alta) {
+		this.fecha_alta = fecha_alta;
 	}
 
-	public Firma getFirma() {
-		return firma;
+
+
+	public String getPassword() {
+		return password;
 	}
 
-	public void setFirma(Firma firma) {
-		this.firma = firma;
+	public void setPassword(String password) {
+		this.password = password;
 	}
 
-	public String getContrasena() {
-		return contrasena;
+	public Long getEnable() {
+		return enable;
 	}
 
-	public void setContrasena(String contrasena) {
-		this.contrasena = contrasena;
+	public void setEnable(Long enable) {
+		this.enable = enable;
 	}
+
+	public Long getActivo() {
+		return activo;
+	}
+
+	public void setActivo(Long activo) {
+		this.activo = activo;
+	}
+	
+	
 	
 	
 }

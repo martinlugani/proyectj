@@ -38,15 +38,17 @@
 
 
 							<td><a class="btn btn-primary btn-xs"
-								th:href="@{/formfirma/} + ${firma.idfirma}"
-								th:text="'Resetear'"></a></td>
+								th:href="@{/formfirma/} + ${firma.idfirma}" th:text="'Resetear'"></a></td>
 							<td><a class="btn btn-danger btn-xs"
 								th:href="@{/eliminarfirma/} + ${firma.idfirma}"
 								th:text="'Inactivar'"
 								onclick="return confirm('Estás seguro que quieres eliminar?');"></a></td>
 
 						</tr>
+						<button type="button" class="btn btn-secondary btn-lg" disabled>Firma MSV</button>
+
 					</tbody>
+
 
 				</table>
 				<nav th:replace="paginator-nav :: paginator"></nav>

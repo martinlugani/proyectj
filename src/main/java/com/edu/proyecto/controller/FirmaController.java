@@ -1,14 +1,20 @@
 package com.edu.proyecto.controller;
 
+import java.util.List;
 import java.util.Map;
+import java.util.UUID;
 
+import javax.servlet.http.HttpSession;
 import javax.validation.Valid;
 
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -23,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.proyecto.models.entity.Categoria;
 import com.edu.proyecto.models.entity.Firma;
+import com.edu.proyecto.models.entity.TipoDocumento;
 import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IFirmaService;
 import com.edu.proyecto.models.services.IUsuarioService;
@@ -37,6 +44,9 @@ public class FirmaController {
 	
 	@Autowired
 	private IUsuarioService usuarioService;
+
+	private final Logger log = LoggerFactory.getLogger(getClass());
+	
 	
 	@RequestMapping(value = "/listarfirma", method = RequestMethod.GET)
 	public String listarfirma(@RequestParam(name="page", defaultValue="0") int page,Model model) {
@@ -64,5 +74,25 @@ public class FirmaController {
 		return "redirect:/listar";
 	}
 	
-	
+	@RequestMapping(value = "/registrarfirma")
+	public String crear( Model model,Authentication auten, HttpSession session ) {
+				
+		Usuario usuario = usuarioService.findByUsername(auten.getName());
+		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
+		//System.out.print("ESTA ES EL ID MIRAME " + emailadmin);		
+		Firma firma = firmaService.findByUsuario(usuario);
+
+		if(session.getAttribute("regfir") == null) {
+			//session.setAttribute("regfir", uniquename);		
+		}
+		
+		if(firma.getUsuario().equals(usuario.getIdusuario())) {
+		session.setAttribute("regfit", true);	
+		}else {
+		session.setAttribute("regfit", false);	
+		}
+			
+		return "/";
+	}
+		
 }

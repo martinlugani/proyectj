@@ -13,7 +13,7 @@
 			<div class="card-body">
 
 				<h4 class="card-title">
-					<a th:href="@{/listarecibos}" class="btn btn-light btn-xs">&laquo;
+					<a th:href="@{/listarecibosusuario}" class="btn btn-light btn-xs">&laquo;
 						volver</a> <a class="btn btn-danger btn-xs float-right"
 						th:href="@{'/verecibo/' + ${reciboc.id}(format=pdf)}">PDF</a>
 				</h4>
@@ -39,6 +39,12 @@
 						th:text="'Forma de pago : Banco Nacion ' "></li>
 					<li class="list-group-item"
 						th:text="'Nro cuenta : 0030 2053 09 1234567899 '"></li>
+					<li class="list-group-item" th:if ="${reciboc.conformidad} == 0"
+						th:text="'NO FIRMADO POR EL USUARIO '"></li>
+					<li class="list-group-item" th:if ="${reciboc.conformidad} == 1"
+						th:text="'NO CONFORMIDAD '"></li>
+					<li class="list-group-item" th:if ="${reciboc.conformidad} == 2"
+						th:text="'CONFORMIDAD '"></li>
 				</ul>
 
 				<ul class="list-group my-2">
@@ -87,13 +93,19 @@
 					<span>Sueldo neto</span>: <span th:text="${reciboc.importetotal}"
 						class="badge badge-secondary"></span>
 				</h5>
-				<a th:href="@{/listarecibos}" class="btn btn-light btn-xs">&laquo;
-					volver</a>
+			</div>			
+			<form class="form-group col-md-4" th:action="@{/firmaindividual}"th:if="${reciboc.estado == 2}" method="post">
+			
+				<label for="inputState">Confirmacion de conformidad</label>
+				<div class="form-inline">
+					<select id="inputState" th:name="conformidad" class="form-control">
+						<option >Conformidad</option>
+						<option >No conformidad</option>
+					</select> &laquo; &laquo; &laquo; 
+					<input type="submit" class="btn btn-dark btn-xs" value="FIRMAR">						
+				</div>
+				</form>
 			</div>
-		</div>
-	</div>
-	
-	
-	<footer th:replace="layout/layout :: footer"></footer>
+		<footer th:replace="layout/layout :: footer"></footer>
 </body>
 </html>

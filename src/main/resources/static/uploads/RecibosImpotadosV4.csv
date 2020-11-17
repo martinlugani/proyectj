@@ -1,0 +1,11 @@
+id,idtrax,idusuario,periodo,idconceptouno,importeuno,idconceptodos,importedos,idconceptotres,importetres,importetotal
+1,1,1,abril,1,350,2,250,3,20000
+2,2,2,Junio,1,450,2,320,3,24000
+3,3,3,Agosto,1,350,2,250,3,27000
+2,2,2,Junio,1,450,2,320,3,24000
+2,2,2,OCTUBRE,1,450,2,320,3,24000
+2,2,8,SEPTIEMBRE,1,450,2,320,3,24000
+2,2,7,SEPTIEMBRE,1,450,2,320,3,24000
+2,2,8,OCTUBRE,1,450,2,320,3,24000
+2,2,7,OCTUBRE,1,450,2,320,3,24000
+2,2,1,OCTUBRE,1,450,2,320,3,24000

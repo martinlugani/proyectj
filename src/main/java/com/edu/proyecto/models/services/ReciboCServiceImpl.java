@@ -5,6 +5,7 @@ import java.util.List;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.Pageable;
+import org.springframework.data.domain.Sort;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -50,5 +51,32 @@ public class ReciboCServiceImpl implements IReciboCService {
 		// TODO Auto-generated method stub
 		return reciboDao.findAll(pageable);
 	}
+	
+	@Transactional(readOnly = true)
+	public List<ReciboC> findAllRecUse(Long idusuario) {
+		
+		// TODO Auto-generated method stub
+		return (List<ReciboC>)reciboDao.findAll();
+	 //return (List<Usuario>)usuarioDao.findAll();
+	}
+
+
+
+	@Override
+	public List<ReciboC> findAllById(Long idusuario) {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public List<ReciboC> findByIdUsuario(Usuario  usuario) {
+		// TODO Auto-generated method stub
+		return reciboDao.findByUsuario(usuario);
+	}
+
+	
+	
+	
+	
 
 }

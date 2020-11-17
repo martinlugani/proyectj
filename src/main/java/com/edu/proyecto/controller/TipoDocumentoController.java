@@ -25,12 +25,7 @@ public class TipoDocumentoController {
 	private ITipoDocumentoService tipodocumentoService;
 	
 	
-/*	@RequestMapping(value = "/listatipodoc", method = RequestMethod.GET)
-	public String listatipodoc(Model model) {
-		model.addAttribute("titulo", "Listado de tipo documento");
-		model.addAttribute("tipodocumento", tipodocumentoService.findAll());
-		return "listatipodoc";
-	}*/
+
 	@RequestMapping(value = "/listatipodoc", method = RequestMethod.GET)
 	public String listatipodoc(@RequestParam(name="page", defaultValue="0") int page,Model model) {
 		Pageable pageRequest = PageRequest.of(page, 4);

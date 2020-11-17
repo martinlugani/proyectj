@@ -38,7 +38,6 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		return usuarioDao.findById(idusuario).orElse(null);
 	}
 	
-	
 
 	@Override
 	@Transactional
@@ -51,5 +50,27 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		// TODO Auto-generated method stub
 		return usuarioDao.findAll(pageable);
 	}
+	@Override
+	@Transactional //(readOnly = true)
+	public Usuario findByUsername(String name) {
+		// TODO Auto-generated method stub
+		return usuarioDao.findByUsername(name);	
+		}
+
+
+
+	
+/*	@Transactional(readOnly = true)
+	public List<Recibo> findAllRec() {
+		// TODO Auto-generated method stub
+		return (List<Recibo>)reciboDao.findAll();
+	 //return (List<Usuario>)usuarioDao.findAll();
+	}
+	
+	@Override
+	public Page<Recibo> findAllRec(Pageable pageable) {
+		// TODO Auto-generated method stub
+		return reciboDao.findAll(pageable);
+	*/
 
 }

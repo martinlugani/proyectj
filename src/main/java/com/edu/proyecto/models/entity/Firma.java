@@ -9,6 +9,8 @@ import javax.persistence.Entity;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
+import javax.persistence.JoinColumn;
+import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
@@ -28,30 +30,34 @@ public class Firma implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @Column(name = "usuarioid")
-	private Long usuarioid;
+    @Column(name = "id")
+	private Long id;
 		
 	private String firma;
 
 	private String refirma;
 	
 	@Null
-	@Column(name = "creafecha")
+	@Column(name = "fecha_alta")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
-	private Date creafecha;
+	private Date fecha_alta;
 	
 	//https://www.baeldung.com/jpa-one-to-one
-	@OneToOne
-    @MapsId
+//	@OneToOne
+//	private Usuario usuario;
+	
+	@ManyToOne 
+	@JoinColumn(name="idusuario")
     private Usuario usuario;
 
-	public Long getUsuarioid() {
-		return usuarioid;
+
+	public Long getId() {
+		return id;
 	}
 
-	public void setUsuarioid(Long usuarioid) {
-		this.usuarioid = usuarioid;
+	public void setId(Long id) {
+		this.id = id;
 	}
 
 	public String getFirma() {
@@ -70,12 +76,14 @@ public class Firma implements Serializable {
 		this.refirma = refirma;
 	}
 
-	public Date getCreafecha() {
-		return creafecha;
+
+
+	public Date getFecha_alta() {
+		return fecha_alta;
 	}
 
-	public void setCreafecha(Date creafecha) {
-		this.creafecha = creafecha;
+	public void setFecha_alta(Date fecha_alta) {
+		this.fecha_alta = fecha_alta;
 	}
 
 	public Usuario getUsuario() {
@@ -85,6 +93,8 @@ public class Firma implements Serializable {
 	public void setUsuario(Usuario usuario) {
 		this.usuario = usuario;
 	}
+
+
  
 	
 }

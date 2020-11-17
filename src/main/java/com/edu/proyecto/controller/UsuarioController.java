@@ -19,11 +19,15 @@ import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
 import javax.validation.Valid;
 
+//import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.data.domain.Page;
 import org.springframework.data.domain.PageRequest;
 import org.springframework.data.domain.Pageable;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -37,6 +41,7 @@ import org.springframework.web.bind.support.SessionStatus;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.proyecto.models.entity.Firma;
+import com.edu.proyecto.models.entity.ReciboC;
 import com.edu.proyecto.models.entity.TipoDocumento;
 import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IFirmaService;
@@ -48,19 +53,18 @@ import com.edu.proyecto.util.paginator.PageRender;
 //@SessionAttributes("usuario")
 public class UsuarioController {
 
+	
 	@Autowired
 	private IUsuarioService usuarioService;
 	
 	@Autowired
 	private IFirmaService firmaService;
 	
+		
 	@Autowired
 	private ITipoDocumentoService tipodocumentoservice;
 	
-	
-	
-	
-	
+	private final org.slf4j.Logger log = LoggerFactory.getLogger(getClass());
 	
 	@Value("${application.controllers.mensaje}")
 	private String mensaje;
@@ -80,7 +84,18 @@ public class UsuarioController {
 	}
 
 	@RequestMapping(value = "/listar", method = RequestMethod.GET)
-	public String listar(@RequestParam(name="page", defaultValue="0") int page, Model model) {
+	public String listar(@RequestParam(name="page", defaultValue="0") int page, Model model,
+			Authentication authentication) {
+		
+		
+		if(authentication != null) {
+			log.info("Hola usuario autenticado, tu username es: ".concat(authentication.getName()));
+		}
+		Authentication auth = SecurityContextHolder.getContext().getAuthentication();
+
+		if(auth != null) {
+			log.info("Utilizando forma estática SecurityContextHolder.getContext().getAuthentication(): Usuario autenticado: ".concat(auth.getName()));
+		}
 		
 		Pageable pageRequest = PageRequest.of(page, 4);
 
@@ -92,6 +107,23 @@ public class UsuarioController {
 		model.addAttribute("usuarios", usuarioService.findAll());
 		model.addAttribute("page", pageRender);
 		return "listar";
+	}
+	///verperfil
+	
+	@RequestMapping(value = "/verperfil")
+	public String verperfil( Authentication auten,Map<String, Object> model, RedirectAttributes flash) {
+		//Usuario usuario = new Usuario();
+		
+		Usuario usuario = usuarioService.findByUsername(auten.getName());
+		log.info(auten.getName() + " id " + usuario.getIdusuario());
+		System.out.print("ESTA ES EL ID MIRAME " + usuario.getIdusuario());
+		
+		usuarioService.findOne(usuario.getIdusuario());
+		System.out.print(usuario.getIdusuario());
+	
+		model.put("usuario", usuario);
+		model.put("titulo", "Detalle usuario: " + usuario.getNombre());
+		return "/verperfil";
 	}
 	
 	public static Long idusuario;
@@ -141,7 +173,8 @@ public class UsuarioController {
 	public String editar(@PathVariable(value="idusuario") Long idusuario,RedirectAttributes flash, Map<String, Object> model) {
 		
 		Usuario usuario = null;
-		
+		List<TipoDocumento> findAll = tipodocumentoservice.findAll();
+
 		if(idusuario > 0) {
 			usuario = usuarioService.findOne(idusuario);
 			if(usuario == null) {
@@ -153,9 +186,10 @@ public class UsuarioController {
 			return "redirect:/listar";
 		}
 		model.put("usuario", usuario);
+		model.put("tipodocumento", findAll);
 		model.put("titulo", "Editar usuario");
 		
-		return "form";
+		return "/form";
 	}
 	
 	public static Long maxUsuario;
@@ -164,8 +198,6 @@ public class UsuarioController {
 
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes flash, SessionStatus status) {
-		
-
 		List<TipoDocumento> findAll = tipodocumentoservice.findAll();
 
 		if (result.hasErrors()) {
@@ -173,11 +205,9 @@ public class UsuarioController {
 			model.addAttribute("titulo", "Formulario de usuario");
 			return "form";	
 		}		
-			String uniqueFilename = UUID.randomUUID().toString();
-						
-			flash.addFlashAttribute("info", "Has generado la contraseña '" + uniqueFilename);
-			usuario.setContrasena(uniqueFilename);
-			
+			String uniqueFilename = UUID.randomUUID().toString();						
+			flash.addFlashAttribute("info", "Se ha enviado mail de notificacion '" );
+			usuario.setPassword(uniqueFilename);			
 			usuario.getIdusuario();
 			
 		String mensajeflash = (usuario.getIdusuario() != null) ? "Usuario editado con exito!" : "Usuario creado con exito!";
@@ -189,8 +219,8 @@ public class UsuarioController {
 		System.out.print("NUEVO USUARIO "+usuario.getIdusuario());
 		idusuariomail = usuario.getIdusuario() ;
 		mailnuevo = usuario.getEmail();
-		passnuevo = usuario.getContrasena();
-		usuarionuevo = usuario.getNick();
+		passnuevo = usuario.getPassword();
+		usuarionuevo = usuario.getUsername();
 		
 		enviarmailpass();
 		return "redirect:listar";
@@ -217,7 +247,7 @@ public class UsuarioController {
 	public String crearfirma(Map<String, Object> model) {
 		System.out.print(idusuario);
 		Firma firma = new Firma();
-		firma.setUsuarioid(idusuario);
+		//firma.setUsuario(idusuario);
 
 		model.put("firma", firma);
 		model.put("titulo", "Formulario de firma");
@@ -230,7 +260,7 @@ public class UsuarioController {
 	@RequestMapping(value = "/formfirma", method = RequestMethod.POST)
 	public String guardar(@Valid Firma firma, BindingResult result, Model model,RedirectAttributes flash, SessionStatus status) {
 
-		if (result.hasErrors()) {
+/*		if (result.hasErrors()) {
 			model.addAttribute("titulo", "Formulario de firma");
 			firma.setUsuarioid(idusuario); //aca se guarda realmente
 			System.out.print(idusuario);
@@ -243,16 +273,13 @@ public class UsuarioController {
 		String mensajeFlash = (firma.getUsuarioid() != null)? "firma editado con éxito!" : "Firma creado con éxito!";
 		firmaService.save(firma);
 		status.setComplete();
-		flash.addFlashAttribute("success", mensajeFlash);
+		flash.addFlashAttribute("success", mensajeFlash);*/
 		return "redirect:listar";
 	}
 	
 	public String enviarmailpass() {
-		
 	Usuario usuario = new Usuario();
-	
-	List<Usuario> findAllUse = usuarioService.findAll();
-
+		List<Usuario> findAllUse = usuarioService.findAll();
 		System.out.println( "Hello World!" );
         Properties propiedad = new Properties();
         propiedad.setProperty("mail.smtp.host", "smtp.gmail.com");
@@ -270,15 +297,40 @@ public class UsuarioController {
         
         String receptor = mailnuevo; //cuenta que recibe
         
+        
+        
         String asunto = "Bienvenido al sistema de RECIBOS HEDLAN";
-        String mensaje= new String ("Estimado usuario   "+usuarionuevo
+        
+        
+        String mensajeuno = "Estimado usuario  "+usuarionuevo;
+        
+        String mensajedos = "  Se acaba de dar de alta su usuario en el sistema";
+        
+        String mensajetres="sus credenciales son: ";
+        
+        String mensajecuatro="USUARIO " + usuarionuevo;
+        
+        String mensajecinco=" CONTRASEÑA "+ passnuevo;
+        
+        String mensajespacio="                                                           ";
+        
+        String mensajeseis=""
+        		+ "su contraseña es temporal, ingrese al siguiente link para cambiar su password ";
+        
+        String mensajesiete="http://localhost:8080/nuevapass/"+idusuariomail;
+        
+/*      String mensaje= new String ("Estimado usuario   "+usuarionuevo
         		+ " Se acaba de dar de alta su usuario en el sistema 	"
         		+ "					sus credenciales son:		"
         		+ "USUARIO	 " + usuarionuevo
         		+ "CONTRASEÑA "+ passnuevo
         		+ "su contraseña es temporal, ingrese al siguiente link para cambiar su password "
-        		+ "http://localhost:8080/nuevapass/"+idusuariomail   ) 		;
+        		+ "http://localhost:8080/nuevapass/"+idusuariomail   ) ;*/
 
+        String mensaje = new String (mensajeuno + mensajedos + mensajetres + mensajecuatro +
+        								mensajecinco + mensajespacio + mensajeseis + mensajesiete);
+
+        
         MimeMessage mail = new MimeMessage(sesion);
         try {
             mail.setFrom(new InternetAddress (correoEnvia));
@@ -306,14 +358,7 @@ public class UsuarioController {
         Logger.getLogger("Enviado");
         
         
-//        try {
-//			EmailClient.sendAsHtml("tincholan10@gmail.com",
-//			        "Martin te manda esto",
-//			        "<h2>Java Mail Example</h2><p>hi there!</p>");
-//		} catch (MessagingException e) {
-//			// TODO Auto-generated catch block
-//			e.printStackTrace();
-//		}
+
     
     
 		return "listar";

@@ -12,6 +12,7 @@ import javax.persistence.ManyToOne;
 import javax.persistence.Table;
 
 
+
 @Entity
 @Table(name = "recibos")
 public class ReciboC  implements Serializable {
@@ -51,9 +52,11 @@ public class ReciboC  implements Serializable {
 	
 	private Long importetotal;
 	
-	private Integer idfirmausuario;
+	private Long idfirmausuario;
 	
-	private Integer idfirmadmin;
+	private Long idfirmadmin;
+	
+	private Long conformidad;
 	
 	@ManyToOne 
 	@JoinColumn(name="idusuario")
@@ -154,22 +157,8 @@ public class ReciboC  implements Serializable {
 		this.importetotal = importetotal;
 	}
 
-	public Integer getIdfirmausuario() {
-		return idfirmausuario;
-	}
-
-	public void setIdfirmausuario(Integer idfirmausuario) {
-		this.idfirmausuario = idfirmausuario;
-	}
-
-	public Integer getIdfirmadmin() {
-		return idfirmadmin;
-	}
-
-	public void setIdfirmadmin(Integer idfirmadmin) {
-		this.idfirmadmin = idfirmadmin;
-	}
-
+	
+	
 	public Usuario getUsuario() {
 		return usuario;
 	}
@@ -201,6 +190,29 @@ public class ReciboC  implements Serializable {
 	public void setConceptotres(String conceptotres) {
 		this.conceptotres = conceptotres;
 	}
-	
+
+	public Long getIdfirmausuario() {
+		return idfirmausuario;
+	}
+
+	public void setIdfirmausuario(Long idfirmausuario) {
+		this.idfirmausuario = idfirmausuario;
+	}
+
+	public Long getIdfirmadmin() {
+		return idfirmadmin;
+	}
+
+	public void setIdfirmadmin(Long idfirmadmin) {
+		this.idfirmadmin = idfirmadmin;
+	}
+
+	public Long getConformidad() {
+		return conformidad;
+	}
+
+	public void setConformidad(Long conformidad) {
+		this.conformidad = conformidad;
+	}
 	
 }
