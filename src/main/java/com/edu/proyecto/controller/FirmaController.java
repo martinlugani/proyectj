@@ -29,6 +29,7 @@ import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
 import com.edu.proyecto.models.entity.Categoria;
 import com.edu.proyecto.models.entity.Firma;
+import com.edu.proyecto.models.entity.ReciboC;
 import com.edu.proyecto.models.entity.TipoDocumento;
 import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IFirmaService;
@@ -43,7 +44,7 @@ public class FirmaController {
 	private IFirmaService firmaService;
 	
 	@Autowired
-	private IUsuarioService usuarioService;
+	private IUsuarioService usuarioservice;
 
 	private final Logger log = LoggerFactory.getLogger(getClass());
 	
@@ -77,22 +78,67 @@ public class FirmaController {
 	@RequestMapping(value = "/registrarfirma")
 	public String crear( Model model,Authentication auten, HttpSession session ) {
 				
-		Usuario usuario = usuarioService.findByUsername(auten.getName());
+		Usuario usuario = usuarioservice.findByUsername(auten.getName());
 		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
 		//System.out.print("ESTA ES EL ID MIRAME " + emailadmin);		
 		Firma firma = firmaService.findByUsuario(usuario);
 
-		if(session.getAttribute("regfir") == null) {
+	//	if(session.getAttribute("regfir") == null) {
 			//session.setAttribute("regfir", uniquename);		
-		}
+	//	}
 		
-		if(firma.getUsuario().equals(usuario.getIdusuario())) {
-		session.setAttribute("regfit", true);	
-		}else {
-		session.setAttribute("regfit", false);	
-		}
+	//	if(firma.getUsuario().equals(usuario.getIdusuario())) {
+	//	session.setAttribute("regfit", true);	
+	//	}else {
+	//	session.setAttribute("regfit", false);	
+	//	}
 			
 		return "/";
 	}
+	@RequestMapping(value = "/formfirma")
+	public String crearfirma(Map<String, Object> model,Authentication auten) {
 		
+		Usuario usuario = usuarioservice.findByUsername(auten.getName());
+		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
+
+		//System.out.print("ESTA ES EL ID MIRAME " + emailadmin);		
+		Firma firma2 = firmaService.findByUsuario(usuario);
+		
+		System.out.print(usuario);
+		Firma firma = new Firma();
+		//firma.setUsuario(idusuario);
+
+		model.put("firma", firma);
+		model.put("titulo", "Formulario de firma");
+		return "formfirma";
+		
+	}
+	/* System.out.println("idrecibo : " + recibo.getIdrecibo());
+	 * System.out.println("concepto : " + recibo.getConcepto()); */
+	
+	@RequestMapping(value = "/formfirma", method = RequestMethod.POST)
+	public String formfirma(@RequestParam(name = "codigofirma") String codigofirma,@RequestParam(name = "refirma") String refirma,Model model, Authentication auten,HttpSession session,RedirectAttributes flash) {
+
+		Usuario usuario = usuarioservice.findByUsername(auten.getName());
+		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
+		Firma firma = new Firma();
+		System.out.print("CODIGO FIRMA  " + codigofirma );
+		System.out.print("  RE FIRMA  " + refirma +"   ");
+
+		if(codigofirma.equals(refirma)) {
+			firma.setUsuario(usuario);
+			firma.setFirma(codigofirma);
+			firmaService.save(firma);
+			String mensajeflash = "Se registro con exito la firma";
+			flash.addFlashAttribute("success", mensajeflash);
+
+			return "redirect:/";
+		}
+		else{
+			String mensajerror = "REVISE LOS VALORES INGRESADOS";
+			flash.addFlashAttribute("error", mensajerror);
+			return "redirect:/formfirma";
+
+		}
+	}
 }

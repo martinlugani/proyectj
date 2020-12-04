@@ -3,15 +3,19 @@ package com.edu.proyecto.models.entity;
 
 import java.io.Serializable;
 import java.util.Date;
+import java.util.List;
 
+import javax.persistence.CascadeType;
 import javax.persistence.Column;
 import javax.persistence.Entity;
+import javax.persistence.FetchType;
 import javax.persistence.GeneratedValue;
 import javax.persistence.GenerationType;
 import javax.persistence.Id;
 import javax.persistence.JoinColumn;
 import javax.persistence.ManyToOne;
 import javax.persistence.MapsId;
+import javax.persistence.OneToMany;
 import javax.persistence.OneToOne;
 import javax.persistence.Table;
 import javax.persistence.Temporal;
@@ -30,34 +34,29 @@ public class Firma implements Serializable {
 	private static final long serialVersionUID = 1L;
 	
 	@Id
-    @Column(name = "id")
-	private Long id;
+	@GeneratedValue(strategy=GenerationType.IDENTITY)
+    @Column(name = "idfirma")
+	private Long idfirma;
 		
 	private String firma;
-
-	private String refirma;
 	
+	@ManyToOne 
+	@JoinColumn(name="idusuario")
+	public Usuario usuario;
+
 	@Null
 	@Column(name = "fecha_alta")
 	@Temporal(TemporalType.DATE)
 	@DateTimeFormat(pattern="yyyy-MM-dd")
 	private Date fecha_alta;
 	
-	//https://www.baeldung.com/jpa-one-to-one
-//	@OneToOne
-//	private Usuario usuario;
-	
-	@ManyToOne 
-	@JoinColumn(name="idusuario")
-    private Usuario usuario;
 
-
-	public Long getId() {
-		return id;
+	public Long getIdfirma() {
+		return idfirma;
 	}
 
-	public void setId(Long id) {
-		this.id = id;
+	public void setIdfirma(Long idfirma) {
+		this.idfirma = idfirma;
 	}
 
 	public String getFirma() {
@@ -67,16 +66,6 @@ public class Firma implements Serializable {
 	public void setFirma(String firma) {
 		this.firma = firma;
 	}
-
-	public String getRefirma() {
-		return refirma;
-	}
-
-	public void setRefirma(String refirma) {
-		this.refirma = refirma;
-	}
-
-
 
 	public Date getFecha_alta() {
 		return fecha_alta;
@@ -95,6 +84,11 @@ public class Firma implements Serializable {
 	}
 
 
- 
 	
+	//https://www.baeldung.com/jpa-one-to-one
+//	@OneToOne
+//	private Usuario usuario;
+
+	
+		
 }

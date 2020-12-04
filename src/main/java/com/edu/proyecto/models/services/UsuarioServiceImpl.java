@@ -56,21 +56,15 @@ public class UsuarioServiceImpl implements IUsuarioService{
 		// TODO Auto-generated method stub
 		return usuarioDao.findByUsername(name);	
 		}
-
-
-
 	
-/*	@Transactional(readOnly = true)
-	public List<Recibo> findAllRec() {
-		// TODO Auto-generated method stub
-		return (List<Recibo>)reciboDao.findAll();
-	 //return (List<Usuario>)usuarioDao.findAll();
-	}
-	
+
 	@Override
-	public Page<Recibo> findAllRec(Pageable pageable) {
+	@Transactional //(readOnly = true)
+	public Usuario findByEmail(String correo) {
 		// TODO Auto-generated method stub
-		return reciboDao.findAll(pageable);
-	*/
+		return usuarioDao.findByEmail(correo);	
+		}
+	
+
 
 }

@@ -2,11 +2,9 @@
 <html xmlns:th="http://www.thymeleaf.org">
 <head th:replace="layout/layout :: head"></head>
 <meta charset="UTF-8" />
-
 <body>
-
-				<div class="container theme-showcase" role="main">
-			<hr class="featurette-divider">
+<!--  				<div class="container theme-showcase" role="main">
+			<hr class="featurette-divider">-->
 			<img th:src="@{/imagenes/logindos.png}" width="136" height="136" class="center">
 			
 			<form  class="form-signin" th:action="@{/login}" method="post">        
@@ -16,12 +14,18 @@
 				<label for="password" class="sr-only">Contraseña</label>
 				<input type="password" id="password" name="password" class="form-control" placeholder="contraseña" required>
 				<button class="btn btn-lg btn-primary btn-block" type="submit">Entrar</button>
+					<div class="container">
+<ul class="nav justify-content-center">
+		<li class="nav-item"><a th:href="@{/olvidepassword}" class="btn btn-link">¿Olvido su contraseña?</a></li>
+</ul>
 			</form>
-
 		</div> 
-	
-	<div class="container">
+
+
 		<hr />
+		
 	</div>
+	
 </body>
 </html>
+

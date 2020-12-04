@@ -3,6 +3,9 @@ package com.edu.proyecto.controller;
 import java.security.Principal;
 import java.util.Map;
 
+import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
+
 import org.slf4j.Logger;
 import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -15,10 +18,12 @@ import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.GetMapping;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.bind.annotation.SessionAttributes;
 import org.springframework.web.servlet.mvc.support.RedirectAttributes;
 
+import com.edu.proyecto.models.entity.Rol;
 import com.edu.proyecto.models.entity.Usuario;
 import com.edu.proyecto.models.services.IUsuarioService;
 
@@ -35,32 +40,29 @@ public class LoginController {
 	@GetMapping ("/login")
 	public String login(@RequestParam(value="error", required=false) String error,
 			@RequestParam(value="logout", required = false) String logout,
-			Model model, Principal principal, RedirectAttributes flash,Authentication auten) {
+			Model model, Principal principal, RedirectAttributes flash,Authentication auten,HttpServletRequest request) {
 		
 		if(principal != null) {
 			flash.addFlashAttribute("info", "Ya ha inciado sesión anteriormente");
 			
-				Usuario usuario = usuarioService.findByUsername(auten.getName());
-				log.info(auten.getName() + " ID - ID usuario " + usuario.getIdusuario());
-				if(usuario.getActivo() != 1) {
-					log.info("ESTOY DENTRO");
+//				Usuario usuario = usuarioService.findByUsername(auten.getName());
+//				log.info(auten.getName() + " ID - ID usuario " + usuario.getIdusuario());
 
-				return "redirect:/nuevacontrasena";
 			}
 				
-		}
+//		}
 		log.info("Se salto el principal");
 		if(error != null) {
 			model.addAttribute("error", "Error en el login: Nombre de usuario o contraseña incorrecta, por favor vuelva a intentarlo!");
+	//		System.out.println("USUARIO "+principal);
+	//		System.out.println("ROL"+ auten.getAuthorities());
+	//		System.out.println("ROL"+ request.isUserInRole);
 		}
 		
 		if(logout != null) {
 			model.addAttribute("success", "Ha cerrado sesión con éxito!");
 		}
-		
-		
-		
-		
+				
 		return "login";
 	}
 	
@@ -87,7 +89,56 @@ public class LoginController {
 		}
 		return "redirect:/";
 
+	}
+	@RequestMapping(value = "/olvidepassword",method = RequestMethod.GET)
+	public String oldassword(Map<String, Object> model, Authentication auten) {
+		Usuario usuario = usuarioService.findByUsername(auten.getName());
+		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
 		
+		return "olvidepassword";
+	}
 
+	@RequestMapping(value = "/olvidepassword", method = RequestMethod.POST)
+	public String olvidepassword(@RequestParam(name = "correo") String correo,Model model, Authentication auten, HttpSession session,
+			RedirectAttributes flash, BCryptPasswordEncoder passEncoder) {
+		usuarioService.findByEmail(correo);
+		System.out.print("CORREO  " + correo);
+
+		
+/*		Usuario usuario = usuarioService.findByUsername(auten.getName());
+		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
+		//Se maneja el envio de mail y se cambia la pass y el rol del usuario por el que sea init, redireccionar a NUEVAPASS.		
+		System.out.print("CORREO  " + correo);
+//		List<Rol> rol = rolService.findOneRol(rol);
+
+		if (password.equals(repass)) {
+			usuario.setPassword(passEncoder.encode(password));
+			if (usuario.getRol().getIdrol() == 3) {
+				System.out.print("PASO");
+				usuario.setRol(null);
+				Rol rol = new Rol();
+				rol.setIdrol(1L);
+				rol.setDescripcion("Administrador");
+				usuario.setRol(rol);
+			}
+			if (usuario.getRol().getIdrol() == 4) {
+				System.out.print("PASO");
+				usuario.setRol(null);
+				Rol rol = new Rol();
+				rol.setIdrol(2L);
+				rol.setDescripcion("Usuario");
+				usuario.setRol(rol);
+			}
+			usuarioService.save(usuario);
+			String mensajeflash = "Se registro con exito";
+			flash.addFlashAttribute("success", mensajeflash);
+
+			return "inicio";
+		} else {
+			System.out.print("ERROR");
+			String mensajerror = "REVISE LOS VALORES INGRESADOS";
+			flash.addFlashAttribute("error", mensajerror);
+			*/
+			return "redirect:/";
 	}
 }

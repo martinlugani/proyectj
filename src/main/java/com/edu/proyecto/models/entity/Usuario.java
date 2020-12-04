@@ -34,19 +34,14 @@ public class Usuario implements Serializable {
 	@GeneratedValue(strategy = GenerationType.IDENTITY)
 	@Column(unique=true)
 	private Long idusuario;
-
 	
 	private String nombre;
-	
-	
+		
 	private String apellido;
-	
-	
+		
 	private String username;
 	
-	
 	private String email;
-
 	
 	private String nrodocumento;
 	
@@ -61,9 +56,12 @@ public class Usuario implements Serializable {
 	@JoinColumn(name="idtipodocumento")
 	public TipoDocumento tipodocumento;
 	
-/*	@ManyToOne 
-	@JoinColumn(name="idfirma")
-	public Firma firma;*/
+	@ManyToOne 
+	@JoinColumn(name="idrol")
+	public Rol rol;
+	
+	@OneToMany(mappedBy = "usuario", fetch = FetchType.LAZY, cascade = CascadeType.ALL , orphanRemoval = true)
+	private List<Firma> firma;
 	
 	//°°°°FALTA EN FORMULARIO
 	@Column(name = "fecha_alta")
@@ -137,6 +135,15 @@ public class Usuario implements Serializable {
 
 	public void setTipodocumento(TipoDocumento tipodocumento) {
 		this.tipodocumento = tipodocumento;
+	}
+	
+
+	public Rol getRol() {
+		return rol;
+	}
+
+	public void setRol(Rol rol) {
+		this.rol = rol;
 	}
 
 	public Date getFecha_alta() {

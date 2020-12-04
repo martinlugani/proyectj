@@ -1,31 +1,43 @@
-<!---->
-<!DOCTYPE HTML>
-<html xmlns:th="http://www.thymeleaf.org">
+<!DOCTYPE html>
+<html xmlns:th="http://www.thymeleaf.org"
+	xmlns:sec="http://www.thymeleaf.org/extras/spring-security">
+<head th:fragment="head">
+<meta charset="UTF-8" />
+<title th:text="${mensaje}">Insert title here</title>
+
+<link rel="stylesheet"
+	href="https://maxcdn.bootstrapcdn.com/bootstrap/4.0.0-beta/css/bootstrap.min.css" />
+
+<link rel="stylesheet" th:href="@{/css/style.css}"></link>
+<link rel="stylesheet" th:href="@{/css/signin.css}"></link>
+<link rel="stylesheet" th:href="@{/css/bootstrap.min.css}" />
+<link rel="stylesheet" th:href="@{/css/jquery-ui.min.css}" />
+
+
 <head th:replace="layout/layout :: head"></head>
 <body>
-	<header th:replace="layout/layout :: header"></header>
 
 	<div class="container py-4">
 
 		<div class="card border-primary text-center">
-			<div class="card-header">Por favor Ingrese la contraseña asignada y la nueva contraseña</div>
+			<div class="card-header">Por favor Ingrese nueva contraseÃ±a</div>
 			<div class="card-body">
 
 				<form th:action="@{/nuevapass}" method="post">
 
 					<div class="form-group row">
-						<label for="firma" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Constraseña</label>
+						<label for="password" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Nueva constraseÃ±a</label>
 						<div class="form-group col-sm-6">
-							<input type="password" name="contraseña" id="contraseña" class="form-control"
-								placeholder="Firma" autofocus required />
+							<input type="password" name="password" id="password" class="form-control"
+								placeholder="Nueva contraseÃ±a" autofocus required />
 						</div>
 					</div>
 			</div>
 			<div class="form-group row">
-				<label for="contraseña" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Nueva Contraseña</label>
+				<label for="repass" class="col-sm-2 col-form-label">&nbsp;&nbsp;&nbsp;&nbsp;Repita contraseÃ±a</label>
 				<div class="form-group col-sm-6">
-					<input type="password" name="contraseña" id="contraseña" class="form-control"
-						placeholder="Repita firma" autofocus required />
+					<input type="password" name="repass" id="repass" class="form-control"
+						placeholder="Repita contraseÃ±a" autofocus required />
 				</div>
 			</div>
 		

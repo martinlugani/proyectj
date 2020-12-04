@@ -3,9 +3,9 @@
 -- https://www.phpmyadmin.net/
 --
 -- Servidor: 127.0.0.1
--- Tiempo de generación: 17-11-2020 a las 23:01:58
--- Versión del servidor: 10.3.16-MariaDB
--- Versión de PHP: 7.1.30
+-- Tiempo de generación: 04-12-2020 a las 22:51:03
+-- Versión del servidor: 10.4.6-MariaDB
+-- Versión de PHP: 7.1.31
 
 SET SQL_MODE = "NO_AUTO_VALUE_ON_ZERO";
 SET AUTOCOMMIT = 0;
@@ -41,7 +41,8 @@ CREATE TABLE `archivo` (
 INSERT INTO `archivo` (`idarchivo`, `nombre`, `ruta`) VALUES
 (1, '4fe5dfce-5897-4db5-bcc0-432c0d6ffab3_RecibosImpotados.csv', 'abril'),
 (6, 'RecibosImpotadosV4.csv', 'lanita'),
-(7, 'recibos Octubre', 'Octubre');
+(7, 'recibos Octubre', 'Octubre'),
+(9, 'RecibosImpotadosV5.csv', 'Summertime sadness');
 
 -- --------------------------------------------------------
 
@@ -92,12 +93,19 @@ INSERT INTO `empresa` (`idempresa`, `cuit`, `direccion`, `empresa`, `fechainicio
 --
 
 CREATE TABLE `firma` (
-  `id` bigint(20) NOT NULL,
-  `fecha_alta` date DEFAULT NULL,
-  `firma` varchar(255) DEFAULT NULL,
-  `refirma` varchar(255) DEFAULT NULL,
-  `idusuario` bigint(20) DEFAULT NULL
+  `idfirma` bigint(20) NOT NULL,
+  `idusuario` bigint(20) DEFAULT NULL,
+  `fecha_alta` date DEFAULT current_timestamp(),
+  `firma` varchar(255) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+
+--
+-- Volcado de datos para la tabla `firma`
+--
+
+INSERT INTO `firma` (`idfirma`, `idusuario`, `fecha_alta`, `firma`) VALUES
+(1, 7, '2020-10-05', 'admin'),
+(2, 8, NULL, 'radio');
 
 -- --------------------------------------------------------
 
@@ -127,7 +135,6 @@ CREATE TABLE `recibos` (
   `idempresa` bigint(20) DEFAULT 1,
   `concepto` varchar(255) DEFAULT NULL,
   `idrecibo` varchar(255) DEFAULT NULL,
-  `importe` int(11) NOT NULL,
   `nrorecibo` varchar(255) DEFAULT NULL,
   `tipoconcepto` varchar(255) DEFAULT NULL,
   `conformidad` int(1) DEFAULT 0
@@ -137,34 +144,42 @@ CREATE TABLE `recibos` (
 -- Volcado de datos para la tabla `recibos`
 --
 
-INSERT INTO `recibos` (`id`, `idusuario`, `estado`, `idtrax`, `periodo`, `idconceptouno`, `importeuno`, `idconceptodos`, `importedos`, `idconceptotres`, `importetres`, `importetotal`, `idfirmausuario`, `idfirmadmin`, `idcategoria`, `conceptodos`, `conceptotres`, `conceptouno`, `idempresa`, `concepto`, `idrecibo`, `importe`, `nrorecibo`, `tipoconcepto`, `conformidad`) VALUES
-(1, 1, '0', 1, 'abril', 1, 350, 2, 250, 3, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, 0),
-(2, 2, '0', 2, 'Junio', 1, 450, 2, 320, 3, 24000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, 0),
-(4, 7, '2', 1, 'abril', 1, 350, 2, 250, 3, 20000, 0, 7, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, 2),
-(5, 8, '3', 2, 'Junio', 1, 450, 2, 320, 3, 24000, 0, 7, 8, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, 0),
-(6, 7, '3', 3, 'Agosto', 1, 350, 2, 250, 3, 27000, 0, 7, 8, NULL, NULL, NULL, NULL, 1, NULL, NULL, 0, NULL, NULL, 0);
+INSERT INTO `recibos` (`id`, `idusuario`, `estado`, `idtrax`, `periodo`, `idconceptouno`, `importeuno`, `idconceptodos`, `importedos`, `idconceptotres`, `importetres`, `importetotal`, `idfirmausuario`, `idfirmadmin`, `idcategoria`, `conceptodos`, `conceptotres`, `conceptouno`, `idempresa`, `concepto`, `idrecibo`, `nrorecibo`, `tipoconcepto`, `conformidad`) VALUES
+(1, 1, '0', 1, 'abril', 1, 350, 2, 250, 3, 20000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(2, 2, '0', 2, 'Junio', 1, 450, 2, 320, 3, 24000, NULL, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(4, 7, '2', 1, 'abril', 1, 350, 2, 250, 3, 20000, 0, 7, 0, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 2),
+(5, 8, '3', 2, 'Junio', 1, 450, 2, 320, 3, 24000, 0, 7, 8, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(6, 7, '3', 3, 'Agosto', 1, 350, 2, 250, 3, 27000, 0, 7, 8, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(20, 1, '0', 1, 'abril', 1, 27000, 2, 2500, 3, 1500, 23000, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(21, 2, '0', 2, 'Junio', 1, 29000, 2, 3000, 3, 1500, 24500, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(22, 3, '0', 3, 'Agosto', 1, 35000, 2, 2400, 3, 1500, 31100, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(23, 2, '0', 2, 'Junio', 1, 45000, 2, 700, 3, 1500, 42800, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(24, 2, '0', 2, 'OCTUBRE', 1, 41000, 2, 800, 3, 1500, 38700, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(25, 8, '0', 2, 'SEPTIEMBRE', 1, 35000, 2, 800, 3, 1500, 32700, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0),
+(26, 7, '0', 2, 'SEPTIEMBRE', 1, 41000, 2, 500, 3, 1500, 37000, NULL, NULL, NULL, NULL, NULL, NULL, 1, NULL, NULL, NULL, NULL, 0);
 
 -- --------------------------------------------------------
 
 --
--- Estructura de tabla para la tabla `roles`
+-- Estructura de tabla para la tabla `rol`
 --
 
-CREATE TABLE `roles` (
-  `idrol` int(11) NOT NULL,
-  `idusuario` int(11) NOT NULL,
-  `rol` varchar(30) DEFAULT NULL
+CREATE TABLE `rol` (
+  `idrol` bigint(20) NOT NULL,
+  `rol` varchar(50) NOT NULL,
+  `descripcion` varchar(50) NOT NULL,
+  `visible` int(1) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
--- Volcado de datos para la tabla `roles`
+-- Volcado de datos para la tabla `rol`
 --
 
-INSERT INTO `roles` (`idrol`, `idusuario`, `rol`) VALUES
-(1, 7, 'ROLE_USER'),
-(2, 1, 'ROLE_USER'),
-(3, 8, 'ROLE_ADMIN'),
-(4, 4, 'ROLE_USER');
+INSERT INTO `rol` (`idrol`, `rol`, `descripcion`, `visible`) VALUES
+(1, 'ROLE_ADMIN', 'Administrador', 0),
+(2, 'ROLE_USER', 'Usuario', 0),
+(3, 'ROLE_INIT_ADMIN', 'Rol Administrador', 1),
+(4, 'ROLE_INIT_USER', 'Rol Usuario', 1);
 
 -- --------------------------------------------------------
 
@@ -203,22 +218,27 @@ CREATE TABLE `usuario` (
   `idtipodocumento` bigint(20) DEFAULT NULL,
   `fecha_alta` date DEFAULT current_timestamp(),
   `password` varchar(100) DEFAULT NULL,
-  `enable` int(1) DEFAULT 0,
-  `activo` int(1) DEFAULT 0
+  `enable` int(1) DEFAULT 1,
+  `idrol` bigint(20) DEFAULT NULL,
+  `activo` bigint(20) DEFAULT NULL
 ) ENGINE=InnoDB DEFAULT CHARSET=latin1;
 
 --
 -- Volcado de datos para la tabla `usuario`
 --
 
-INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `nrodocumento`, `email`, `idtipodocumento`, `fecha_alta`, `password`, `enable`, `activo`) VALUES
-(1, 'Daniel', 'Granizado', 'dgranizado', 20458745, 'dgranizado@gmail.com', 1, '2020-07-15', '$2a$10$ePLjZ0cRad5KTCZxYMQeTebB5a6DvLLEEh72s4EQEfgt33ufh32A2', 1, 0),
-(2, 'Elizabeth', 'Grant', 'egrant', 21452146, 'egrant@gmail.com', 1, '2020-05-12', NULL, 1, 0),
-(4, 'lanita', 'Usuario', 'uprueba', 25432453, 'pedro@friendface.com', 2, '2020-11-03', '$2a$10$ePLjZ0cRad5KTCZxYMQeTebB5a6DvLLEEh72s4EQEfgt33ufh32A2', 1, 0),
-(7, 'user', 'Usuario', 'user', 43456232, 'busuario@gmail.com', 1, NULL, '$2a$10$ePLjZ0cRad5KTCZxYMQeTebB5a6DvLLEEh72s4EQEfgt33ufh32A2', 1, 0),
-(8, 'Usuario', 'admin', 'admin', 23982382, 'jimena.villca2@gmail.com', 1, '2020-10-01', '$2a$10$ePLjZ0cRad5KTCZxYMQeTebB5a6DvLLEEh72s4EQEfgt33ufh32A2', 1, 0),
-(43, 'Oscar', 'Mendez', 'omendez', 20392871, 'jimena.villca2@gmail.com', 1, NULL, '1e2cd9ba-f2b3-4e60-879f-f49fda7897c4', NULL, NULL),
-(45, 'Isabel', 'Winigs', 'iwinigs', 28129328, 'jimena.villca2@gmail.com', 3, NULL, '30134a17-967b-410a-83a6-a374005153e7', NULL, NULL);
+INSERT INTO `usuario` (`idusuario`, `nombre`, `apellido`, `username`, `nrodocumento`, `email`, `idtipodocumento`, `fecha_alta`, `password`, `enable`, `idrol`, `activo`) VALUES
+(1, 'Daniel', 'Granizado', 'dgranizado', 20458745, 'dgranizado@gmail.com', 1, '2020-07-15', '$2a$10$ePLjZ0cRad5KTCZxYMQeTebB5a6DvLLEEh72s4EQEfgt33ufh32A2', 1, 3, NULL),
+(2, 'Elizabeth', 'Grant', 'egrant', 21452146, 'egrant@gmail.com', 1, '2020-05-12', '$2a$10$80TpVhCcuvNz.Kiiamr5uOgbIauyzc4oNFaQDeRV1RatbxjO6i1NC', 1, 3, NULL),
+(3, 'Federico', 'Carpe', 'fcarpe', 38299128, 'fcarpe@gmail.com.ar', 1, NULL, '0802606a-c193-4cb0-895d-0dc24f143e67', NULL, 2, NULL),
+(7, 'user', 'Usuario', 'user', 43456232, 'busuario@gmail.com', 1, NULL, '$2a$10$v6GAy.YpRU/VV4WqExcNteaEpVrZGSEVAhG3zLx8PZ8tk.ozx3ODy', 1, 2, NULL),
+(8, 'Usuario', 'admin', 'admin', 23982382, 'jimena.villca2@gmail.com', 1, '2020-10-01', '$2a$10$ePLjZ0cRad5KTCZxYMQeTebB5a6DvLLEEh72s4EQEfgt33ufh32A2', 1, 1, NULL),
+(70, 'Federico', 'Usuario', 'fusuario', 24576121, 'jimena.villca2@gmail.com', 1, NULL, '92c659dd-6218-4f14-ab2c-bda3e6cd8592', NULL, 2, NULL),
+(71, 'Federico', 'Carpe', 'fcarpe', 24576121, 'jimena.villca2@gmail.com', 1, NULL, '08b16aed-8c28-44c7-88a2-5b692c32f356', NULL, 2, NULL),
+(72, 'Felipe', 'Rey', 'frey', 9877767, 'jimena.villca2@gmail.com', 1, NULL, '$2a$10$GRCw74yYqwdPTNyb0epfVuV0JwY2g/jCHq2xfsclMfbX9BPRoGBUa', 1, 3, NULL),
+(73, 'Julia', 'Rey', 'jrey', 24576121, 'jimena.villca2@gmail.com', 1, NULL, '$2a$10$qmkoDkFSk586qA2dBLElcOdwl10UtGfGbHypV4CG0oSE7tE5.FRly', NULL, 4, NULL),
+(74, 'lanabanana', 'Musk', 'lmusck', 24576121, 'jimena.villca2@gmail.com', 1, NULL, '$2a$10$8BjzcobUPkcW4u.oW6OeHuWMzlYlnvJQFY.IuNnr6itCkUEWPC2d.', 1, 1, NULL),
+(75, 'Daniel', 'Ultra', 'dultra', 24576121, 'jimena.villca2@gmail.com', 1, NULL, '$2a$10$p3UIDH3/ebW5RTcicwRLfuC/N1wp1seSPJf6V6J1J9tT8QE3PA3kW', 1, 2, NULL);
 
 --
 -- Índices para tablas volcadas
@@ -246,7 +266,7 @@ ALTER TABLE `empresa`
 -- Indices de la tabla `firma`
 --
 ALTER TABLE `firma`
-  ADD PRIMARY KEY (`id`);
+  ADD PRIMARY KEY (`idfirma`);
 
 --
 -- Indices de la tabla `recibos`
@@ -257,11 +277,10 @@ ALTER TABLE `recibos`
   ADD KEY `FK1ob3plf5yn7uxvdg85g5rcofy` (`idempresa`);
 
 --
--- Indices de la tabla `roles`
+-- Indices de la tabla `rol`
 --
-ALTER TABLE `roles`
-  ADD PRIMARY KEY (`idrol`),
-  ADD KEY `iduserol` (`idusuario`);
+ALTER TABLE `rol`
+  ADD PRIMARY KEY (`idrol`);
 
 --
 -- Indices de la tabla `tipodocumento`
@@ -274,7 +293,8 @@ ALTER TABLE `tipodocumento`
 --
 ALTER TABLE `usuario`
   ADD PRIMARY KEY (`idusuario`),
-  ADD KEY `FK5ioqihytjua20v0gx70p10grx` (`idtipodocumento`);
+  ADD KEY `FK5ioqihytjua20v0gx70p10grx` (`idtipodocumento`),
+  ADD KEY `FK10bib7rrkh36ss78063ifbq6k` (`idrol`);
 
 --
 -- AUTO_INCREMENT de las tablas volcadas
@@ -284,7 +304,7 @@ ALTER TABLE `usuario`
 -- AUTO_INCREMENT de la tabla `archivo`
 --
 ALTER TABLE `archivo`
-  MODIFY `idarchivo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=8;
+  MODIFY `idarchivo` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=10;
 
 --
 -- AUTO_INCREMENT de la tabla `categoria`
@@ -299,16 +319,16 @@ ALTER TABLE `empresa`
   MODIFY `idempresa` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=2;
 
 --
+-- AUTO_INCREMENT de la tabla `firma`
+--
+ALTER TABLE `firma`
+  MODIFY `idfirma` bigint(20) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=3;
+
+--
 -- AUTO_INCREMENT de la tabla `recibos`
 --
 ALTER TABLE `recibos`
-  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=7;
-
---
--- AUTO_INCREMENT de la tabla `roles`
---
-ALTER TABLE `roles`
-  MODIFY `idrol` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=5;
+  MODIFY `id` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=27;
 
 --
 -- AUTO_INCREMENT de la tabla `tipodocumento`
@@ -320,7 +340,7 @@ ALTER TABLE `tipodocumento`
 -- AUTO_INCREMENT de la tabla `usuario`
 --
 ALTER TABLE `usuario`
-  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=46;
+  MODIFY `idusuario` int(11) NOT NULL AUTO_INCREMENT, AUTO_INCREMENT=76;
 
 --
 -- Restricciones para tablas volcadas
@@ -331,18 +351,13 @@ ALTER TABLE `usuario`
 --
 ALTER TABLE `recibos`
   ADD CONSTRAINT `FK1ob3plf5yn7uxvdg85g5rcofy` FOREIGN KEY (`idempresa`) REFERENCES `empresa` (`idempresa`),
-  ADD CONSTRAINT `idusuario` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`);
-
---
--- Filtros para la tabla `roles`
---
-ALTER TABLE `roles`
-  ADD CONSTRAINT `iduserol` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`);
+  ADD CONSTRAINT `FKnkl0qxj20e7bfmaf7xbwhq3mx` FOREIGN KEY (`idusuario`) REFERENCES `usuario` (`idusuario`);
 
 --
 -- Filtros para la tabla `usuario`
 --
 ALTER TABLE `usuario`
+  ADD CONSTRAINT `FK10bib7rrkh36ss78063ifbq6k` FOREIGN KEY (`idrol`) REFERENCES `rol` (`idrol`),
   ADD CONSTRAINT `FK5ioqihytjua20v0gx70p10grx` FOREIGN KEY (`idtipodocumento`) REFERENCES `tipodocumento` (`idtipodocumento`);
 COMMIT;
 

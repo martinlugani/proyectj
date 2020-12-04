@@ -55,8 +55,8 @@ public class Recibo implements Serializable{
 	@CsvBindByName(column = "importetres")
 	private int importetres;
 	
-	
-	private Integer importetotal;
+	@CsvBindByName(column = "importetotal")
+	private int importetotal;
 	
 	
 	private Integer idfirmausuario;
@@ -152,11 +152,11 @@ public class Recibo implements Serializable{
 		this.estado = estado;
 	}
 
-	public Integer getImportetotal() {
+	public int getImportetotal() {
 		return importetotal;
 	}
 
-	public void setImportetotal(Integer importetotal) {
+	public void setImportetotal(int importetotal) {
 		this.importetotal = importetotal;
 	}
 

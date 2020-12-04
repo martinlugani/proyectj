@@ -61,7 +61,7 @@ public class ArchivoController {
 		}
 
 		if (!archivito.isEmpty()) {
-			String uniqueFilename = UUID.randomUUID().toString() + "_" + archivito.getOriginalFilename();
+			String uniqueFilename =  archivito.getOriginalFilename();
 			Path rootPath = Paths.get("uploads").resolve(uniqueFilename);
 			Path rootAbsoloutPath = rootPath.toAbsolutePath();
 			

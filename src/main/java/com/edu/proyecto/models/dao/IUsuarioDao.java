@@ -12,6 +12,7 @@ public interface IUsuarioDao extends PagingAndSortingRepository<Usuario, Long>{
 
 	public Usuario findByUsername(String name);
 
+	public Usuario findByEmail (String correo);
 //	public Page<Usuario> findByUsername(Pageable pageable);
 	
 

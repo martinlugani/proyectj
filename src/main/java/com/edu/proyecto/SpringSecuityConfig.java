@@ -58,6 +58,8 @@ public class SpringSecuityConfig extends WebSecurityConfigurerAdapter {
 		.antMatchers("/uploads/**").hasAnyRole("USER")
 		.antMatchers("/form/**").hasAnyRole("ADMIN")
 		.antMatchers("/eliminar/**").hasAnyRole("ADMIN")
+		
+//		.antMatchers("/nuevapass/**").hasAnyRole("INIT")
 		.anyRequest().authenticated()
 		.and()
 		.formLogin()
@@ -78,7 +80,7 @@ public class SpringSecuityConfig extends WebSecurityConfigurerAdapter {
 		.dataSource(datasource)
 		.passwordEncoder(passEncoder)
 		.usersByUsernameQuery("SELECT username,password, enable FROM usuario WHERE username=?")
-		.authoritiesByUsernameQuery("SELECT u.username, r.rol FROM roles r INNER JOIN usuario u ON r.idusuario=u.idusuario WHERE u.username=?")
+		.authoritiesByUsernameQuery("SELECT u.username, r.rol FROM rol r, usuario u WHERE u.idrol=r.idrol AND u.username=?")
 		;
 		
 		

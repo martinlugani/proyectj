@@ -131,8 +131,10 @@ public class ReciboController {
 		log.info(auten.getName() + " id " + usuario.getIdusuario());
 		System.out.print("ESTA ES EL ID MIRAME " + idusuarioset);
 		List<ReciboC> reciboc = receservice.findByIdUsuario(usuario);
-
-		System.out.println("idrecibo : " + reciboc.get(0));
+		if(!reciboc.isEmpty()) {
+	System.out.println("idrecibo : " + reciboc.get(0));
+}
+		
 //		 System.out.println("" : " + recibo.getConcepto());
 		
 
@@ -233,10 +235,9 @@ public class ReciboController {
 		File file = new File(SAMPLE_CSV_FILE_PATH);
 		String path = file.getAbsolutePath();
 		try (Reader reader = Files.newBufferedReader(Paths.get(SAMPLE_CSV_FILE_PATH));) {
-			CsvToBean<Recibo> csvToBean = new CsvToBeanBuilder(reader).withType(Recibo.class)
-					.withIgnoreLeadingWhiteSpace(true).build();
-			List<Recibo> lista = new ArrayList<Recibo>();
-			Iterator<Recibo> reciboIterator = csvToBean.iterator();
+		 CsvToBean<Recibo> csvToBean = new CsvToBeanBuilder(reader).withType(Recibo.class).withIgnoreLeadingWhiteSpace(true).build();
+		 List<Recibo> lista = new ArrayList<Recibo>();
+		 Iterator<Recibo> reciboIterator = csvToBean.iterator();
 
 			while (reciboIterator.hasNext()) {
 				Recibo recibo = reciboIterator.next();
@@ -416,9 +417,7 @@ public class ReciboController {
 	        String contrasena = "lanabanana";//tu contraseña de acceso a gmaila esa cuenta
 	        
 	        String receptor = emailadmin; //cuenta que recibe
-	        
-	        
-	        
+	      	            
 	        String asunto = "Bienvenido al sistema de RECIBOS HEDLAN";
 	                
 	        String mensajeuno = "";
@@ -436,7 +435,6 @@ public class ReciboController {
 	            transportar.connect(correoEnvia,contrasena);
 	            transportar.sendMessage(mail, mail.getRecipients(Message.RecipientType.TO));          
 	            transportar.close();
-	                
 	            
 	        } catch (AddressException ex) {
 	        	log.info(ex.toString());
@@ -444,18 +442,10 @@ public class ReciboController {
 	        } catch (MessagingException ex) {
 	        	log.info(ex.toString());
 	            System.err.println(ex);
-	        }
-	        
+	        }	        
 	        log.info("Enviado");
 	 		return "listar";
 			
 		}
 		
-		
-	
-
-
-
 }
-
-
