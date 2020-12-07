@@ -69,11 +69,10 @@
 				<a class="btn btn-success btn-xs" th:if="${estado} == true"  th:href="@{/primerainstanciafirmasiva/}" th:text="'Firma masiva'"></a>
 				
 				&nbsp; &nbsp; &nbsp; &nbsp; &nbsp; &nbsp; 
-				
+				<div th:if="${reciboc!=null and !reciboc.empty}">
 				<a class="btn btn-info btn-xs" th:if="false" th:href="@{/formfirma/}" th:text="'Firma masiva'"></a>
-				
-		
-				
+				</div>
+				<div th:if="${ reciboc.empty}">La Lista esta vacia</div>
 			
 
 			</div>

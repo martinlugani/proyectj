@@ -290,8 +290,16 @@ public class UsuarioController {
 	@RequestMapping(value = "/form", method = RequestMethod.POST)
 	public String guardar(@Valid Usuario usuario, BindingResult result, Model model, RedirectAttributes flash,
 			SessionStatus status, BCryptPasswordEncoder passEncoder) {
+		Usuario usuarioRep=usuarioService.findByUsername(usuario.getUsername());
 		List<TipoDocumento> findAll = tipodocumentoservice.findAll();
 		List<Rol> findAllRol = rolService.findAllRol();
+		model.addAttribute("tipodocumento", findAll);
+		model.addAttribute("rol", arrayrolactivo);
+		if(usuarioRep!= null) {
+			model.addAttribute("error","El usuario esta repetido");
+			return "form";
+		}
+		
 		if (result.hasErrors()) {
 			model.addAttribute("tipodocumento", findAll);
 			model.addAttribute("rol", findAllRol);
@@ -307,7 +315,7 @@ public class UsuarioController {
 
 		String mensajeflash = (usuario.getIdusuario() != null) ? "Usuario editado con exito!"
 				: "Usuario creado con exito!";
-
+		
 		usuarioService.save(usuario);
 		status.setComplete();
 		flash.addFlashAttribute("success", mensajeflash);
@@ -401,5 +409,54 @@ public class UsuarioController {
 
 		return "listar";
 	}
+	@RequestMapping(value = "/olvidepassword",method = RequestMethod.GET)
+	public String oldassword(Map<String, Object> model) {
+	
+		
+		return "olvidepassword";
+	}
 
+	@RequestMapping(value = "/olvidepassword", method = RequestMethod.POST)
+	public String olvidepassword(@RequestParam(name = "correo") String correo,Model model, Authentication auten, HttpSession session,
+			RedirectAttributes flash, BCryptPasswordEncoder passEncoder) {
+		usuarioService.findByEmail(correo);
+		System.out.print("CORREO  " + correo);
+
+		
+/*		Usuario usuario = usuarioService.findByUsername(auten.getName());
+		log.info(auten.getName() + " ID - ID FIRMA " + usuario.getIdusuario());
+		//Se maneja el envio de mail y se cambia la pass y el rol del usuario por el que sea init, redireccionar a NUEVAPASS.		
+		System.out.print("CORREO  " + correo);
+//		List<Rol> rol = rolService.findOneRol(rol);
+
+		if (password.equals(repass)) {
+			usuario.setPassword(passEncoder.encode(password));
+			if (usuario.getRol().getIdrol() == 3) {
+				System.out.print("PASO");
+				usuario.setRol(null);
+				Rol rol = new Rol();
+				rol.setIdrol(1L);
+				rol.setDescripcion("Administrador");
+				usuario.setRol(rol);
+			}
+			if (usuario.getRol().getIdrol() == 4) {
+				System.out.print("PASO");
+				usuario.setRol(null);
+				Rol rol = new Rol();
+				rol.setIdrol(2L);
+				rol.setDescripcion("Usuario");
+				usuario.setRol(rol);
+			}
+			usuarioService.save(usuario);
+			String mensajeflash = "Se registro con exito";
+			flash.addFlashAttribute("success", mensajeflash);
+
+			return "inicio";
+		} else {
+			System.out.print("ERROR");
+			String mensajerror = "REVISE LOS VALORES INGRESADOS";
+			flash.addFlashAttribute("error", mensajerror);
+			*/
+			return "redirect:/";
+	}
 }
